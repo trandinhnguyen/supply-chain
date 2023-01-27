@@ -101,6 +101,39 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "farmerName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "farmerAddress",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "productName",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "productPrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "productCode",
+						"type": "uint256"
+					}
+				],
+				"name": "produceProduct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "renounceOwnership",
 				"outputs": [],
@@ -140,6 +173,9 @@
 				"owner()": {
 					"details": "Returns the address of the current owner."
 				},
+				"produceProduct(string,string,string,uint256,uint256)": {
+					"details": "STEP 1 : Produced a product."
+				},
 				"renounceOwnership()": {
 					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
 				},
@@ -172,19 +208,19 @@
 	},
 	"sources": {
 		"Structure.sol": {
-			"keccak256": "0x4781a44d6358d25bf5921f68c99491fc1aab2f82231c08f1d345f64d21300226",
+			"keccak256": "0x2c56432a8ff582041deb82a20507f155f01c6e2265864c43b48705d50314cb7e",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://f1cf8bbddbc7990b81458ccd0592d8174fa71a7a36137e0c5c01ffe5b456a392",
-				"dweb:/ipfs/QmbQkH5hMfbQPeqau4gqmBskJz3dpxdpTNw9EvCbgJivHc"
+				"bzz-raw://fb4fd5e4dfafa4fce0bc1dbaa0dc4e74c6f56d10b17b3b3dc5e98bb482b1b45a",
+				"dweb:/ipfs/QmY9twN2hzbccruYgncGrmfADYzvAehuWDS6kPG5AT29xU"
 			]
 		},
 		"SupplyChain.sol": {
-			"keccak256": "0x178ea76577ff8f77f48e30089c45df0fb682021350c461e1ad6c24a402dff37b",
+			"keccak256": "0x7090d4155bcfc540cca3a86578cf75677f1281ee3ce86f9157199b17618aa5ca",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://e189c537201fbd8e78fc59cf36a1c325dc2ba830c6487ebca156355bdad58604",
-				"dweb:/ipfs/QmeN1EH1vk3GSa9G3nBMhJRHtnTMKpp2NegEyYJCT8hnj8"
+				"bzz-raw://aa41d854eec7cff90a64b83a20dbc062a2a9a505af06ce27a4cac06957d3afa6",
+				"dweb:/ipfs/QmUspTvEYTYzumwsrefidecXGQGCDXuMAjJxL1Vganxr63"
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol": {

@@ -66,4 +66,45 @@ contract SupplyChain is Ownable{
         product.customer.customer = customer;
         product.transaction = transaction;
     }
+
+    function setProductDetailInfo(
+        Structure.Product memory product,
+        string memory productName,
+        uint256 productCode,
+        uint256 productPrice
+    ) internal pure{
+        product.productDetail.productName=productName;
+        product.productDetail.productCode=productCode;
+        product.productDetail.productPrice=productPrice;
+    }
+
+    ///@dev STEP 1 : Produced a product.
+    function produceProduct(
+        string memory farmerName,
+        string memory farmerAddress,
+        string memory productName,
+        uint256 productPrice,
+        uint256 productCode
+    ) public{
+        require(hasFarmerRole(msg.sender));
+        Structure.Product memory product;
+        product.sku=sku;
+        product.uid=uid;
+        product.owner=msg.sender;
+        product.farmer.farmer=msg.sender;
+        product.farmer.farmerName=farmerName;
+        product.farmer.farmerAddress=farmerAddress;
+        
+        initEmptyProductInfo(product);
+        setProductDetailInfo(product, productName,productPrice,productCode);
+
+        product.productState=Structure.State.ProducedByFarmer;
+        products[uid] = product;
+        productHistory[uid].history.push(product);
+
+        sku++;
+        uid++;
+
+        emit ProducedByFarmer(uid-1);
+    }
 }

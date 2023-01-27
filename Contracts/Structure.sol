@@ -38,7 +38,7 @@ library Structure{
         uint256 sku;
         address owner;
         State productState;
-        ProductDetail productdetail;
+        ProductDetail productDetail;
         FarmerDetail farmer;
         DistributorDetail distributor;
         RetailerDetail retailer;
