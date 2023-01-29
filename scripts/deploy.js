@@ -7,25 +7,19 @@
 const hre = require("hardhat");
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const SupplyChain = await hre.ethers.getContractFactory("SupplyChain");
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
-
-  const Lock = await hre.ethers.getContractFactory("Lock");
-
-  const gasPrice = await Lock.signer.getGasPrice();
+  const gasPrice = await SupplyChain.signer.getGasPrice();
   console.log(`Current gas price: ${gasPrice}`);
 
-  // const estimatedGas = await Lock.signer.estimateGas(
-  //   Lock.getDeployTransaction(),
-  // );
-  // console.log(`Estimated gas: ${estimatedGas}`);
+  const estimatedGas = await SupplyChain.signer.estimateGas(
+    SupplyChain.getDeployTransaction(),
+  );
+  console.log(`Estimated gas: ${estimatedGas}`);
 
-  const deploymentPrice = gasPrice * 2774584;
-  const deployerBalance = await Lock.signer.getBalance();
-  const deployerAddress = await Lock.signer.getAddress();
+  const deploymentPrice = gasPrice * estimatedGas;
+  const deployerBalance = await SupplyChain.signer.getBalance();
+  const deployerAddress = await SupplyChain.signer.getAddress();
   
   console.log(`Deployer address:  ${deployerAddress}`);
   console.log(`Deployer balance:  ${ethers.utils.formatEther(deployerBalance)}`);
@@ -38,12 +32,12 @@ async function main() {
     );
   }
 
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  const supplyChain = await SupplyChain.deploy();
 
-  await lock.deployed();
+  await supplyChain.deployed();
 
   console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+    `Contract deployed to ${supplyChain.address}`
   );
 }
 
