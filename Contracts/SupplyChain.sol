@@ -37,6 +37,21 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         emit FarmerAdded(_account);
     }
 
+    event CustomerAdded(address indexed _account);
+
+    function hasCustomerRole(address _account) public view returns (bool) {
+        require(_account != address(0));
+        return roles[_account].Customer;
+    }
+
+    function addCustomerRole(address _account) public {
+        require(_account != address(0));
+        require(!hasCustomerRole(_account));
+
+        roles[_account].Farmer = true;
+        emit CustomerAdded(_account);
+    }
+
     // =============== EVENT ===============
     event ProducedByFarmer(uint256 uid);
     event PurchasedByDistributor(uint256 uid);
@@ -46,7 +61,8 @@ contract SupplyChain is Ownable, Distributor, Retailer {
     event ShippedByDistributor(uint256 uid);
     event ReceivedByRetailer(uint256 uid);
     event ShippedByRetailer(uint256 uid);
-
+    event ReceivedByCustomer(uint256 uid);
+    
     //============================================
 
     //=============== MODIFIER ===================
