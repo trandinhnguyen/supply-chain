@@ -1,33 +1,43 @@
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: UNLICENSED
 
 pragma solidity >=0.7.0 <0.9.0;
 
-library Structure{
-    enum State{
+library Structure {
+    enum State {
         ProducedByFarmer,
-        PurchaseByDistributor,
-        ShippedByFarmer
+        PurchasedByDistributor,
+        ShippedByFarmer,
+        ReceivedByDistributor,
+        PurchasedByRetailer,
+        ShippedByDistributor,
+        ReceivedByRetailer,
+        PurchasedByCustomer,
+        ShippedByRetailer
     }
 
-    struct FarmerDetail{
+    struct FarmerDetail {
         address farmer;
         string farmerName;
         string farmerAddress;
     }
 
-    struct DistributorDetail{
+    struct DistributorDetail {
         address distributor;
+        string distributorName;
+        string distributorAddress;
     }
 
-    struct RetailerDetail{
+    struct RetailerDetail {
         address retailer;
+        string retailerName;
+        string retailerAddress;
     }
 
-    struct CustomerDetail{
+    struct CustomerDetail {
         address customer;
     }
 
-    struct ProductDetail{
+    struct ProductDetail {
         string productName;
         uint256 productCode;
         uint256 productPrice;
