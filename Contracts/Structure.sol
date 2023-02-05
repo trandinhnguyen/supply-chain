@@ -5,12 +5,13 @@ pragma solidity >=0.7.0 <0.9.0;
 library Structure {
     enum State {
         ProducedByFarmer,
+        PurchasedByDistributor,
         ShippedByFarmer,
-        PurchaseByDistributor,
         ReceivedByDistributor,
+        PurchasedByRetailer,
         ShippedByDistributor,
-        PurchaseByRetailer,
         ReceivedByRetailer,
+        PurchasedByCustomer,
         ShippedByRetailer
     }
 
