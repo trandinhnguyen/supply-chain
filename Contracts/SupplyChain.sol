@@ -37,6 +37,21 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         emit FarmerAdded(_account);
     }
 
+    event CustomerAdded(address indexed _account);
+
+    function hasCustomerRole(address _account) public view returns (bool) {
+        require(_account != address(0));
+        return roles[_account].Customer;
+    }
+
+    function addCustomerRole(address _account) public {
+        require(_account != address(0));
+        require(!hasCustomerRole(_account));
+
+        roles[_account].Farmer = true;
+        emit CustomerAdded(_account);
+    }
+
     // =============== EVENT ===============
     event ProducedByFarmer(uint256 uid);
     event PurchasedByDistributor(uint256 uid);
@@ -45,7 +60,9 @@ contract SupplyChain is Ownable, Distributor, Retailer {
     event PurchasedByRetailer(uint256 uid);
     event ShippedByDistributor(uint256 uid);
     event ReceivedByRetailer(uint256 uid);
+    event PurchasedByCustomer(uint256 uid);
     event ShippedByRetailer(uint256 uid);
+    event ReceivedByCustomer(uint256 uid);
 
     //============================================
 
@@ -60,14 +77,15 @@ contract SupplyChain is Ownable, Distributor, Retailer {
 
     modifier purchasedByDistributor(uint256 _uid) {
         require(
-            products[_uid].productState ==
-                Structure.State.PurchasedByDistributor
+            products[_uid].productState == Structure.State.PurchasedByDistributor
         );
         _;
     }
 
     modifier shippedByFarmer(uint256 _uid) {
-        require(products[_uid].productState == Structure.State.ShippedByFarmer);
+        require(
+            products[_uid].productState == Structure.State.ShippedByFarmer
+        );
         _;
     }
 
@@ -113,6 +131,12 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         _;
     }
 
+    modifier receivedByCustomer(uint256 _uid) {
+        require(
+            products[_uid].productState == Structure.State.ReceivedByCustomer
+        );
+        _;
+    }
     //============================================
 
     //=============== CHAIN FUNCTION ===================
@@ -240,6 +264,17 @@ contract SupplyChain is Ownable, Distributor, Retailer {
     }
 
     /// @dev STEP 8: Customer purchases the product of Retailer
+    function purchaseByCustomer(uint256 _uid) 
+        public
+        {
+            require(hasCustomerRole(msg.sender));
+            products[_uid].customer.customer = msg.sender;
+            products[_uid].productState = Structure.State.PurchasedByCustomer;
+
+            productHistory[uid].history.push(products[_uid]);
+            
+            emit PurchasedByCustomer(_uid);
+        }
 
     /// @dev STEP 9: Retailer ships the product to Customer
     function shipByRetailer(uint256 _uid)
@@ -252,4 +287,17 @@ contract SupplyChain is Ownable, Distributor, Retailer {
 
         emit ShippedByRetailer(_uid);
     }
+    ///@dev STEP 10: Customer receives the product.
+    function receiveByCustomer(uint256 _uid) 
+        public
+        {
+            require(hasCustomerRole(msg.sender));
+            products[_uid].customer.customer = msg.sender;
+            products[_uid].productState = Structure.State.ReceivedByCustomer;
+
+            productHistory[uid].history.push(products[_uid]);
+            
+            emit ReceivedByCustomer(_uid);
+        }
+
 }
