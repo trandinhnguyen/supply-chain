@@ -12,7 +12,8 @@ library Structure {
         ShippedByDistributor,
         ReceivedByRetailer,
         PurchasedByCustomer,
-        ShippedByRetailer
+        ShippedByRetailer,
+        ReceivedByCustomer
     }
 
     struct FarmerDetail {
