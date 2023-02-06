@@ -16,28 +16,6 @@ library Structure {
         ReceivedByCustomer
     }
 
-    struct FarmerDetail {
-        address farmer;
-        string farmerName;
-        string farmerAddress;
-    }
-
-    struct DistributorDetail {
-        address distributor;
-        string distributorName;
-        string distributorAddress;
-    }
-
-    struct RetailerDetail {
-        address retailer;
-        string retailerName;
-        string retailerAddress;
-    }
-
-    struct CustomerDetail {
-        address customer;
-    }
-
     struct ProductDetail {
         string productName;
         uint256 productCode;
@@ -50,21 +28,14 @@ library Structure {
         address owner;
         State productState;
         ProductDetail productDetail;
-        FarmerDetail farmer;
-        DistributorDetail distributor;
-        RetailerDetail retailer;
-        CustomerDetail customer;
+        address farmer;
+        address distributor;
+        address retailer;
+        address customer;
         string transaction;
     }
 
     struct ProductHistory {
         Product[] history;
-    }
-
-    struct Roles {
-        bool Farmer;
-        bool Distributor;
-        bool Retailer;
-        bool Customer;
     }
 }

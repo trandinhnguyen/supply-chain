@@ -1,55 +1,23 @@
 // SPDX-License-Identifier: GPL-3.0
-
 pragma solidity >=0.7.0 <0.9.0;
 
 import "./Structure.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./accesscontrol/Farmer.sol";
 import "./accesscontrol/Distributor.sol";
 import "./accesscontrol/Retailer.sol";
+import "./accesscontrol/Customer.sol";
 
-contract SupplyChain is Ownable, Distributor, Retailer {
+contract SupplyChain is Farmer, Distributor, Retailer, Customer {
     //product code
     uint256 public uid;
     uint256 private sku;
 
     mapping(uint256 => Structure.Product) products;
     mapping(uint256 => Structure.ProductHistory) productHistory;
-    mapping(address => Structure.Roles) roles;
 
     constructor() payable {
         sku = 1;
         uid = 1;
-    }
-
-    //============= ADD ROLES =====================
-    event FarmerAdded(address indexed _account);
-
-    function hasFarmerRole(address _account) public view returns (bool) {
-        require(_account != address(0));
-        return roles[_account].Farmer;
-    }
-
-    function addFarmerRole(address _account) public {
-        require(_account != address(0));
-        require(!hasFarmerRole(_account));
-
-        roles[_account].Farmer = true;
-        emit FarmerAdded(_account);
-    }
-
-    event CustomerAdded(address indexed _account);
-
-    function hasCustomerRole(address _account) public view returns (bool) {
-        require(_account != address(0));
-        return roles[_account].Customer;
-    }
-
-    function addCustomerRole(address _account) public {
-        require(_account != address(0));
-        require(!hasCustomerRole(_account));
-
-        roles[_account].Farmer = true;
-        emit CustomerAdded(_account);
     }
 
     // =============== EVENT ===============
@@ -65,7 +33,6 @@ contract SupplyChain is Ownable, Distributor, Retailer {
     event ReceivedByCustomer(uint256 uid);
 
     //============================================
-
     //=============== MODIFIER ===================
 
     modifier producedByFarmer(uint256 _uid) {
@@ -77,15 +44,14 @@ contract SupplyChain is Ownable, Distributor, Retailer {
 
     modifier purchasedByDistributor(uint256 _uid) {
         require(
-            products[_uid].productState == Structure.State.PurchasedByDistributor
+            products[_uid].productState ==
+                Structure.State.PurchasedByDistributor
         );
         _;
     }
 
     modifier shippedByFarmer(uint256 _uid) {
-        require(
-            products[_uid].productState == Structure.State.ShippedByFarmer
-        );
+        require(products[_uid].productState == Structure.State.ShippedByFarmer);
         _;
     }
 
@@ -137,10 +103,9 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         );
         _;
     }
+
     //============================================
-
     //=============== CHAIN FUNCTION ===================
-
     function initEmptyProductInfo(Structure.Product memory product)
         internal
         pure
@@ -150,9 +115,9 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         address customer;
         string memory transaction;
 
-        product.distributor.distributor = distributor;
-        product.retailer.retailer = retailer;
-        product.customer.customer = customer;
+        product.distributor = distributor;
+        product.retailer = retailer;
+        product.customer = customer;
         product.transaction = transaction;
     }
 
@@ -167,34 +132,30 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         product.productDetail.productPrice = productPrice;
     }
 
-    ///@dev STEP 1 : Produced a product.
+    ///@dev STEP 1: Farmer produces a product.
     function produceProduct(
-        string memory farmerName,
-        string memory farmerAddress,
         string memory productName,
         uint256 productPrice,
         uint256 productCode
-    ) public {
-        require(hasFarmerRole(msg.sender));
+    ) public onlyFarmer {
         Structure.Product memory product;
         product.sku = sku;
         product.uid = uid;
         product.owner = msg.sender;
-        product.farmer.farmer = msg.sender;
-        product.farmer.farmerName = farmerName;
-        product.farmer.farmerAddress = farmerAddress;
+        product.farmer = msg.sender;
 
         initEmptyProductInfo(product);
         setProductDetailInfo(product, productName, productPrice, productCode);
+        addFarmerProduct(uid);
 
         product.productState = Structure.State.ProducedByFarmer;
         products[uid] = product;
         productHistory[uid].history.push(product);
 
+        emit ProducedByFarmer(uid);
+
         sku++;
         uid++;
-
-        emit ProducedByFarmer(uid - 1);
     }
 
     /// @dev STEP 2: Distributor purchases the product of Farmer.
@@ -203,7 +164,7 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         onlyDistributor
         producedByFarmer(_uid)
     {
-        products[_uid].distributor.distributor = msg.sender;
+        products[_uid].distributor = msg.sender;
         products[_uid].productState = Structure.State.PurchasedByDistributor;
         productHistory[_uid].history.push(products[_uid]);
 
@@ -211,6 +172,16 @@ contract SupplyChain is Ownable, Distributor, Retailer {
     }
 
     /// @dev STEP 3: Farmer ships the product to Distributor
+    function shipByFarmer(uint256 _uid)
+        public
+        onlyFarmer
+        purchasedByDistributor(_uid)
+    {
+        products[_uid].productState = Structure.State.ShippedByFarmer;
+        productHistory[_uid].history.push(products[_uid]);
+
+        emit ShippedByFarmer(_uid);
+    }
 
     /// @dev STEP 4: Distributor receives the product shipped by Farmer.
     function receiveByDistributor(uint256 _uid)
@@ -219,6 +190,8 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         shippedByFarmer(_uid)
     {
         products[_uid].owner = msg.sender;
+        addDistributorProduct(_uid);
+
         products[_uid].productState = Structure.State.ReceivedByDistributor;
         productHistory[_uid].history.push(products[_uid]);
 
@@ -231,7 +204,7 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         onlyRetailer
         receivedByDistributor(_uid)
     {
-        products[_uid].retailer.retailer = msg.sender;
+        products[_uid].retailer = msg.sender;
         products[_uid].productState = Structure.State.PurchasedByRetailer;
         productHistory[_uid].history.push(products[_uid]);
 
@@ -257,6 +230,8 @@ contract SupplyChain is Ownable, Distributor, Retailer {
         shippedByDistributor(_uid)
     {
         products[_uid].owner = msg.sender;
+        addRetailerProduct(_uid);
+
         products[_uid].productState = Structure.State.ReceivedByRetailer;
         productHistory[_uid].history.push(products[_uid]);
 
@@ -264,17 +239,17 @@ contract SupplyChain is Ownable, Distributor, Retailer {
     }
 
     /// @dev STEP 8: Customer purchases the product of Retailer
-    function purchaseByCustomer(uint256 _uid) 
+    function purchaseByCustomer(uint256 _uid)
         public
-        {
-            require(hasCustomerRole(msg.sender));
-            products[_uid].customer.customer = msg.sender;
-            products[_uid].productState = Structure.State.PurchasedByCustomer;
+        onlyCustomer
+        receivedByRetailer(_uid)
+    {
+        products[_uid].customer = msg.sender;
+        products[_uid].productState = Structure.State.PurchasedByCustomer;
+        productHistory[_uid].history.push(products[_uid]);
 
-            productHistory[uid].history.push(products[_uid]);
-            
-            emit PurchasedByCustomer(_uid);
-        }
+        emit PurchasedByCustomer(_uid);
+    }
 
     /// @dev STEP 9: Retailer ships the product to Customer
     function shipByRetailer(uint256 _uid)
@@ -287,17 +262,94 @@ contract SupplyChain is Ownable, Distributor, Retailer {
 
         emit ShippedByRetailer(_uid);
     }
-    ///@dev STEP 10: Customer receives the product.
-    function receiveByCustomer(uint256 _uid) 
+
+    /// @dev STEP 10: Customer receives the product.
+    function receiveByCustomer(uint256 _uid)
         public
-        {
-            require(hasCustomerRole(msg.sender));
-            products[_uid].customer.customer = msg.sender;
-            products[_uid].productState = Structure.State.ReceivedByCustomer;
+        onlyCustomer
+        shippedByRetailer(_uid)
+    {
+        products[_uid].owner = msg.sender;
+        addCustomerProduct(_uid);
 
-            productHistory[uid].history.push(products[_uid]);
-            
-            emit ReceivedByCustomer(_uid);
-        }
+        products[_uid].productState = Structure.State.ReceivedByCustomer;
+        productHistory[_uid].history.push(products[_uid]);
 
+        emit ReceivedByCustomer(_uid);
+    }
+
+    // ==================== FUNCTIONALITY =======================
+    function getProductDetail(uint256 _uid)
+        public
+        view
+        returns (
+            uint256 productUid,
+            uint256 productSku,
+            address productOwner,
+            Structure.State productState,
+            string memory productName,
+            uint256 productPrice,
+            uint256 productCode,
+            address farmer,
+            address distributor,
+            address retailer,
+            address customer,
+            string memory transaction
+        )
+    {
+        require(products[_uid].uid != 0);
+        Structure.Product memory product = products[_uid];
+        return (
+            product.uid,
+            product.sku,
+            product.owner,
+            product.productState,
+            product.productDetail.productName,
+            product.productDetail.productPrice,
+            product.productDetail.productCode,
+            product.farmer,
+            product.distributor,
+            product.retailer,
+            product.customer,
+            product.transaction
+        );
+    }
+
+    function getProductHistoryLength(uint256 _uid)
+        public
+        view
+        returns (uint256)
+    {
+        require(products[_uid].uid != 0);
+        return productHistory[_uid].history.length;
+    }
+
+    function getProductHistory(uint256 _uid, uint256 i)
+        public
+        view
+        returns (
+            address productOwner,
+            Structure.State productState,
+            address farmer,
+            address distributor,
+            address retailer,
+            address customer,
+            string memory transaction
+        )
+    {
+        require(products[_uid].uid != 0);
+        require(i < getProductHistoryLength(_uid));
+
+        Structure.Product memory product = productHistory[_uid].history[i];
+
+        return (
+            product.owner,
+            product.productState,
+            product.farmer,
+            product.distributor,
+            product.retailer,
+            product.customer,
+            product.transaction
+        );
+    }
 }

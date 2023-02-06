@@ -22,8 +22,12 @@ contract Retailer is Ownable {
         return retailers.hasRole(account);
     }
 
-    function _addRetailer(address account) internal {
-        retailers.addRole(account);
+    function _addRetailer(
+        address account,
+        string memory name,
+        string memory realAddress
+    ) internal {
+        retailers.addRole(account, name, realAddress);
         emit RetailerAdded(account);
     }
 
@@ -32,11 +36,55 @@ contract Retailer is Ownable {
         emit RetailerRemoved(account);
     }
 
-    function addRetailer(address account) public onlyOwner {
-        _addRetailer(account);
+    function _changeRetailerName(address account, string memory name) internal {
+        retailers.changeName(account, name);
     }
 
-    function renounceRetailer() public {
+    function _changeRetailerRealAddress(
+        address account,
+        string memory realAddress
+    ) internal {
+        retailers.changeRealAddress(account, realAddress);
+    }
+
+    function addRetailer(
+        address account,
+        string memory name,
+        string memory realAddress
+    ) public onlyOwner {
+        _addRetailer(account, name, realAddress);
+    }
+
+    function renounceRetailer() public onlyRetailer {
         _removeRetailer(msg.sender);
+    }
+
+    function changeRetailerName(string memory name) public {
+        _changeRetailerName(msg.sender, name);
+    }
+
+    function changeRetailerRealAddress(string memory realAddress) public {
+        _changeRetailerRealAddress(msg.sender, realAddress);
+    }
+
+    function getRetailerInfo(address account)
+        public
+        view
+        returns (string memory name, string memory realAddress)
+    {
+        require(isRetailer(account));
+        return retailers.getInfo(account);
+    }
+
+    function addRetailerProduct(uint256 uid) internal {
+        retailers.addProduct(msg.sender, uid);
+    }
+
+    function getAllRetailerProduct() public view returns (uint256[] memory) {
+        return retailers.getAllProduct(msg.sender);
+    }
+
+    function getRetailerProductCount() public view returns (uint256) {
+        return retailers.getProductCount(msg.sender);
     }
 }
