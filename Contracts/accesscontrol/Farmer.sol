@@ -3,6 +3,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import "./Roles.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "../Structure.sol";
 
 // Define a contract 'FarmerRole' to manage this role - add, remove, check
 contract Farmer is Ownable {
@@ -12,6 +13,7 @@ contract Farmer is Ownable {
     event FarmerRemoved(address indexed account);
 
     Roles.Role private farmers;
+    mapping(address => Structure.PersonDetail) private details;
 
     modifier onlyFarmer() {
         require(isFarmer(msg.sender));
@@ -27,7 +29,9 @@ contract Farmer is Ownable {
         string memory name,
         string memory realAddress
     ) internal {
-        farmers.addRole(account, name, realAddress);
+        farmers.addRole(account);
+        details[account].name = name;
+        details[account].realAddress = realAddress;
         emit FarmerAdded(account);
     }
 
@@ -37,14 +41,14 @@ contract Farmer is Ownable {
     }
 
     function _changeFarmerName(address account, string memory name) internal {
-        farmers.changeName(account, name);
+        details[account].name = name;
     }
 
     function _changeFarmerRealAddress(
         address account,
         string memory realAddress
     ) internal {
-        farmers.changeRealAddress(account, realAddress);
+        details[account].realAddress = realAddress;
     }
 
     function addFarmer(
@@ -59,11 +63,14 @@ contract Farmer is Ownable {
         _removeFarmer(msg.sender);
     }
 
-    function changeFarmerName(string memory name) public {
+    function changeFarmerName(string memory name) public onlyFarmer {
         _changeFarmerName(msg.sender, name);
     }
 
-    function changeFarmerRealAddress(string memory realAddress) public {
+    function changeFarmerRealAddress(string memory realAddress)
+        public
+        onlyFarmer
+    {
         _changeFarmerRealAddress(msg.sender, realAddress);
     }
 
@@ -73,18 +80,23 @@ contract Farmer is Ownable {
         returns (string memory name, string memory realAddress)
     {
         require(isFarmer(account));
-        return farmers.getInfo(account);
+        return (details[account].name, details[account].realAddress);
     }
 
-    function addFarmerProduct(uint256 uid) internal {
-        farmers.addProduct(msg.sender, uid);
+    function addFarmerProduct(uint256 uid) internal onlyFarmer {
+        details[msg.sender].products.push(uid);
     }
 
-    function getAllFarmerProduct() public view returns (uint256[] memory) {
-        return farmers.getAllProduct(msg.sender);
+    function getAllFarmerProduct()
+        public
+        view
+        onlyFarmer
+        returns (uint256[] memory)
+    {
+        return details[msg.sender].products;
     }
 
-    function getFarmerProductCount() public view returns (uint256) {
-        return farmers.getProductCount(msg.sender);
+    function getFarmerProductCount() public view onlyFarmer returns (uint256) {
+        return details[msg.sender].products.length;
     }
 }
