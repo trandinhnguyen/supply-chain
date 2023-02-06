@@ -22,8 +22,12 @@ contract Distributor is Ownable {
         return distributors.hasRole(account);
     }
 
-    function _addDistributor(address account) internal {
-        distributors.addRole(account);
+    function _addDistributor(
+        address account,
+        string memory name,
+        string memory realAddress
+    ) internal {
+        distributors.addRole(account, name, realAddress);
         emit DistributorAdded(account);
     }
 
@@ -32,11 +36,57 @@ contract Distributor is Ownable {
         emit DistributorRemoved(account);
     }
 
-    function addDistributor(address account) public onlyOwner {
-        _addDistributor(account);
+    function _changeDistributorName(address account, string memory name)
+        internal
+    {
+        distributors.changeName(account, name);
     }
 
-    function renounceDistributor() public {
+    function _changeDistributorRealAddress(
+        address account,
+        string memory realAddress
+    ) internal {
+        distributors.changeRealAddress(account, realAddress);
+    }
+
+    function addDistributor(
+        address account,
+        string memory name,
+        string memory realAddress
+    ) public onlyOwner {
+        _addDistributor(account, name, realAddress);
+    }
+
+    function renounceDistributor() public onlyDistributor {
         _removeDistributor(msg.sender);
+    }
+
+    function changeDistributorName(string memory name) public {
+        _changeDistributorName(msg.sender, name);
+    }
+
+    function changeDistributorRealAddress(string memory realAddress) public {
+        _changeDistributorRealAddress(msg.sender, realAddress);
+    }
+
+    function getDistributorInfo(address account)
+        public
+        view
+        returns (string memory name, string memory realAddress)
+    {
+        require(isDistributor(account));
+        return distributors.getInfo(account);
+    }
+
+    function addDistributorProduct(uint256 uid) internal {
+        distributors.addProduct(msg.sender, uid);
+    }
+
+    function getAllDistributorProduct() public view returns (uint256[] memory) {
+        return distributors.getAllProduct(msg.sender);
+    }
+
+    function getDistributorProductCount() public view returns (uint256) {
+        return distributors.getProductCount(msg.sender);
     }
 }
