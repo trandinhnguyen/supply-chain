@@ -1,10 +1,16 @@
-import Home from "./Home";
-
+import Home from "./components/Home";
+import {Route, NavLink, Routes} from 'react-router-dom';
 function App(){
   return(
     <div className="App">
-      <h2>Hello World</h2>
-      <Home/>
+      <div>
+        <nav>
+            <NavLink to='/'>Home</NavLink>
+        </nav>
+        <Routes>
+          <Route path='/' element={<Home />} />
+        </Routes>
+    </div>
     </div>
   )
 }

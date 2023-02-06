@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {ethers} from  "ethers";
-import SupplyChainContract from  './artifacts/SupplyChain.json'
+import SupplyChainContract from  '../artifacts/SupplyChain.json'
+import {Route, Link, NavLink} from 'react-router-dom';
 
 const Home = () => {
 
@@ -51,7 +52,6 @@ const Home = () => {
 
     const addFarmer = (event) => {
 		event.preventDefault();
-		console.log('sending ' + event.target.addFarmer.value + ' to the contract');
 		contract.addFarmerRole(event.target.addFarmer.value);
 	}
 
@@ -65,6 +65,18 @@ const Home = () => {
             <h3>Connect to MetaMask</h3>
             <button onClick={connectWalletHandler }>{connButtonText}</button>
             <h3>Address: {defaultAccount}</h3>
+			<div className='content'>
+				<h3>Visit as:</h3>
+				<ul className='menu'>
+					<li>
+						<NavLink to="/admin">Admin</NavLink>
+					</li>
+					<li>
+					<NavLink to="/farmer">Farmer</NavLink>
+					</li>
+				</ul>
+				<hr/>
+			</div>
             <form onSubmit={addFarmer}>
 				<input id="addFarmer" type="text"/>
 				<button type={"submit"}> Add Farmer </button>
