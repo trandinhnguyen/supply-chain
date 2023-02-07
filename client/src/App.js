@@ -1,9 +1,11 @@
 import Home from "./components/Home";
 import Admin from "./components/Admin";
+import Farmer from "./components/Farmer";
 import {Route, NavLink, Routes} from 'react-router-dom';
 import React, { Component } from "react";
 import {ethers} from  "ethers";
 import SupplyChainContract from  './artifacts/SupplyChain.json'
+
 class App extends Component{
   state = {
     errorMessage: null, 
@@ -68,6 +70,7 @@ class App extends Component{
           </div>
           <Routes>
             <Route exact path='/admin' element={<Admin account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
+            <Route exact path='/farmer' element={<Farmer account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
             <Route exact path='/' element={<Home />} />
           </Routes>
       </div>

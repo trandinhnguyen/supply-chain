@@ -211,7 +211,13 @@ contract SupplyChain is Ownable, Distributor, Retailer {
     }
 
     /// @dev STEP 3: Farmer ships the product to Distributor
+    function shipByFarmer(uint256 _uid) public purchasedByDistributor(_uid){
+        require(hasFarmerRole(msg.sender));
+        products[_uid].productState = Structure.State.ShippedByFarmer;
+        productHistory[_uid].history.push(products[_uid]);
 
+        emit ShippedByFarmer(_uid);
+    }
     /// @dev STEP 4: Distributor receives the product shipped by Farmer.
     function receiveByDistributor(uint256 _uid)
         public

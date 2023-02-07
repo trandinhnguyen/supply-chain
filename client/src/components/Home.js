@@ -69,7 +69,7 @@ const Home = () => {
 						<NavLink to="/admin">Admin</NavLink>
 					</li>
 					<li>
-					<NavLink to="/farmer">Farmer</NavLink>
+						<NavLink to="/farmer">Farmer</NavLink>
 					</li>
 				</ul>
 				<hr/>
