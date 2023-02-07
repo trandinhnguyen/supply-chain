@@ -3,6 +3,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import "./Roles.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "../Structure.sol";
 
 // Define a contract 'DistributorRole' to manage this role - add, remove, check
 contract Distributor is Ownable {
@@ -12,6 +13,7 @@ contract Distributor is Ownable {
     event DistributorRemoved(address indexed account);
 
     Roles.Role private distributors;
+    mapping(address => Structure.PersonDetail) private details;
 
     modifier onlyDistributor() {
         require(isDistributor(msg.sender));
@@ -27,7 +29,9 @@ contract Distributor is Ownable {
         string memory name,
         string memory realAddress
     ) internal {
-        distributors.addRole(account, name, realAddress);
+        distributors.addRole(account);
+        details[account].name = name;
+        details[account].realAddress = realAddress;
         emit DistributorAdded(account);
     }
 
@@ -39,14 +43,14 @@ contract Distributor is Ownable {
     function _changeDistributorName(address account, string memory name)
         internal
     {
-        distributors.changeName(account, name);
+        details[account].name = name;
     }
 
     function _changeDistributorRealAddress(
         address account,
         string memory realAddress
     ) internal {
-        distributors.changeRealAddress(account, realAddress);
+        details[account].realAddress = realAddress;
     }
 
     function addDistributor(
@@ -75,18 +79,18 @@ contract Distributor is Ownable {
         returns (string memory name, string memory realAddress)
     {
         require(isDistributor(account));
-        return distributors.getInfo(account);
+        return (details[account].name, details[account].realAddress);
     }
 
     function addDistributorProduct(uint256 uid) internal {
-        distributors.addProduct(msg.sender, uid);
+        details[msg.sender].products.push(uid);
     }
 
     function getAllDistributorProduct() public view returns (uint256[] memory) {
-        return distributors.getAllProduct(msg.sender);
+        return details[msg.sender].products;
     }
 
     function getDistributorProductCount() public view returns (uint256) {
-        return distributors.getProductCount(msg.sender);
+        return details[msg.sender].products.length;
     }
 }

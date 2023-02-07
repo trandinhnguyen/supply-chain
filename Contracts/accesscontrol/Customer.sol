@@ -3,6 +3,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import "./Roles.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "../Structure.sol";
 
 // Define a contract 'CustomerRole' to manage this role - add, remove, check
 contract Customer is Ownable {
@@ -12,6 +13,7 @@ contract Customer is Ownable {
     event CustomerRemoved(address indexed account);
 
     Roles.Role private customers;
+    mapping(address => Structure.PersonDetail) private details;
 
     modifier onlyCustomer() {
         require(isCustomer(msg.sender));
@@ -27,7 +29,9 @@ contract Customer is Ownable {
         string memory name,
         string memory realAddress
     ) internal {
-        customers.addRole(account, name, realAddress);
+        customers.addRole(account);
+        details[account].name = name;
+        details[account].realAddress = realAddress;
         emit CustomerAdded(account);
     }
 
@@ -45,14 +49,14 @@ contract Customer is Ownable {
     }
 
     function addCustomerProduct(uint256 uid) internal {
-        customers.addProduct(msg.sender, uid);
+        details[msg.sender].products.push(uid);
     }
 
     function getAllCustomerProduct() public view returns (uint256[] memory) {
-        return customers.getAllProduct(msg.sender);
+        return details[msg.sender].products;
     }
 
     function getCustomerProductCount() public view returns (uint256) {
-        return customers.getProductCount(msg.sender);
+        return details[msg.sender].products.length;
     }
 }

@@ -22,6 +22,12 @@ library Structure {
         uint256 productPrice;
     }
 
+    struct PersonDetail {
+        string name;
+        string realAddress;
+        uint256[] products;
+    }
+
     struct Product {
         uint256 uid;
         uint256 sku;

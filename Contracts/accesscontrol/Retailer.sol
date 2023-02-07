@@ -3,6 +3,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import "./Roles.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "../Structure.sol";
 
 // Define a contract 'RetailerRole' to manage this role - add, remove, check
 contract Retailer is Ownable {
@@ -12,6 +13,7 @@ contract Retailer is Ownable {
     event RetailerRemoved(address indexed account);
 
     Roles.Role private retailers;
+    mapping(address => Structure.PersonDetail) private details;
 
     modifier onlyRetailer() {
         require(isRetailer(msg.sender));
@@ -27,7 +29,9 @@ contract Retailer is Ownable {
         string memory name,
         string memory realAddress
     ) internal {
-        retailers.addRole(account, name, realAddress);
+        retailers.addRole(account);
+        details[account].name = name;
+        details[account].realAddress = realAddress;
         emit RetailerAdded(account);
     }
 
@@ -37,14 +41,14 @@ contract Retailer is Ownable {
     }
 
     function _changeRetailerName(address account, string memory name) internal {
-        retailers.changeName(account, name);
+        details[account].name = name;
     }
 
     function _changeRetailerRealAddress(
         address account,
         string memory realAddress
     ) internal {
-        retailers.changeRealAddress(account, realAddress);
+        details[account].realAddress = realAddress;
     }
 
     function addRetailer(
@@ -73,18 +77,18 @@ contract Retailer is Ownable {
         returns (string memory name, string memory realAddress)
     {
         require(isRetailer(account));
-        return retailers.getInfo(account);
+        return (details[account].name, details[account].realAddress);
     }
 
     function addRetailerProduct(uint256 uid) internal {
-        retailers.addProduct(msg.sender, uid);
+        details[msg.sender].products.push(uid);
     }
 
     function getAllRetailerProduct() public view returns (uint256[] memory) {
-        return retailers.getAllProduct(msg.sender);
+        return details[msg.sender].products;
     }
 
     function getRetailerProductCount() public view returns (uint256) {
-        return retailers.getProductCount(msg.sender);
+        return details[msg.sender].products.length;
     }
 }
