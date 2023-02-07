@@ -7,9 +7,18 @@ const Admin = (props) => {
 
     const addFarmer = async (event) => {
 		event.preventDefault();
-        await contract.addFarmerRole(event.target.addFarmer.value)
-        .then(result => setMessage("Add Farmer successfully !!!"))
-        .catch(err => setMessage("This account has been assigned to Farmer Role before"));
+        await contract.addFarmer(event.target.farmer.value,
+            event.target.farmerName.value,
+            event.target.farmerRealAddress.value
+        )
+        .then(result => setMessage("Add Farmer successfully !!!"));
+        /*.catch(err => () => {
+            setMessage(""/*"This account has been assigned to Farmer Role before");
+            console.log(err);
+        });
+        */
+        
+
 	}
 
     // if(account!=owner){
@@ -23,7 +32,15 @@ const Admin = (props) => {
         <div>
             <h3>Admin Page</h3>
             <form onSubmit={addFarmer}>
-				<input id="addFarmer" type="text"/>
+                <label for="farmer">Account: </label>
+				<input id="farmer" type="text"/>
+                <br></br>
+                <label for="farmerName">Name: </label>
+                <input id="farmerName" type="text"/>
+                <br></br>
+                <label for="farmerRealAddress">Address: </label>
+                <input id="farmerRealAddress" type="text"/>
+                <br></br>
 				<button type={"submit"}> Add Farmer </button>
 			</form>
             <h5>{message}</h5>

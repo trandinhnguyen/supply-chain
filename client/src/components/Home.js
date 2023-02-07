@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ethers } from "ethers";
 // import SupplyChainContract from "./utils/SupplyChain.json";
 import { contractABI, contractAddress } from "../utils/constants";
+import { NavLink } from "react-router-dom";
 
 const { ethereum } = window;
 
@@ -227,5 +228,7 @@ const Home = () => {
     </div>
   );
 };
+*/
 
 export default Home;
+
