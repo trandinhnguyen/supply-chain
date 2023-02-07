@@ -357,13 +357,15 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         public
         view 
         returns (uint256[] memory) {
-            uint256[] memory result = new uint256[](uid);
+            uint256[] memory result = new uint256[](uid - 1);
             uint j = 0;
             for(uint i = 1; i < uid; i++)
             {
-                require(products[i].productState == state_);
-                result[j] = i;
-                j++;
+                if(products[i].productState == state_)
+                {
+                    result[j] = i;
+                    j++;
+                }
             }
             return result;
         }
