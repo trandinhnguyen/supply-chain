@@ -8,8 +8,8 @@ const Farmer = (props) => {
     const addProduct = async (event) => {
 		event.preventDefault();
         await contract.produceProduct(
-            event.target.farmerName.value,
-            event.target.farmerAddress.value,
+            // event.target.farmerName.value,
+            // event.target.farmerAddress.value,
             event.target.productName.value,
             event.target.productPrice.value,
             event.target.productCode.value

@@ -1,4 +1,4 @@
-import abi from "./SupplyChain.json";
+import abi from "../artifacts/SupplyChain.json";
 
 export const contractABI = abi.abi;
-export const contractAddress = "0xcd67eD02c4a60A3A1f53077Ae1e925228cf629D7";
+export const contractAddress = "0x6afA79D9073BE2a7b1c018Ef53069c8d5fDfa005";
