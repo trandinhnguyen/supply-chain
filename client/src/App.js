@@ -4,7 +4,7 @@ import Farmer from "./components/Farmer";
 import {Route, NavLink, Routes} from 'react-router-dom';
 import React, { Component } from "react";
 import {ethers} from  "ethers";
-import SupplyChainContract from  './artifacts/SupplyChain.json'
+import { contractABI, contractAddress } from "./utils/constants";
 
 class App extends Component{
   state = {
@@ -39,12 +39,11 @@ class App extends Component{
 	}
 
   updateEthers = () => {
-    const contractAddress ="0x64a4293c4002923dAE40cDc286Da8CD7cdB9D375"
 		let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
 
 		let tempSigner = tempProvider.getSigner();
 
-		let tempContract = new ethers.Contract(contractAddress, SupplyChainContract.abi, tempSigner);
+		let tempContract = new ethers.Contract(contractAddress, contractABI, tempSigner);
 		
     this.setState({provider:tempProvider, signer:tempSigner, contract: tempContract})
 	}

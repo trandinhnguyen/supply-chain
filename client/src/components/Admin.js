@@ -11,14 +11,10 @@ const Admin = (props) => {
             event.target.farmerName.value,
             event.target.farmerRealAddress.value
         )
-        .then(result => setMessage("Add Farmer successfully !!!"));
-        /*.catch(err => () => {
-            setMessage(""/*"This account has been assigned to Farmer Role before");
-            console.log(err);
+        .then(result => setMessage("Add Farmer successfully !!!"))
+        .catch(err => {
+            setMessage(err.message);
         });
-        */
-        
-
 	}
 
     // if(account!=owner){
@@ -32,13 +28,13 @@ const Admin = (props) => {
         <div>
             <h3>Admin Page</h3>
             <form onSubmit={addFarmer}>
-                <label for="farmer">Account: </label>
+                <label htmlFor="farmer">Account: </label>
 				<input id="farmer" type="text"/>
                 <br></br>
-                <label for="farmerName">Name: </label>
+                <label htmlFor="farmerName">Name: </label>
                 <input id="farmerName" type="text"/>
                 <br></br>
-                <label for="farmerRealAddress">Address: </label>
+                <label htmlFor="farmerRealAddress">Address: </label>
                 <input id="farmerRealAddress" type="text"/>
                 <br></br>
 				<button type={"submit"}> Add Farmer </button>
