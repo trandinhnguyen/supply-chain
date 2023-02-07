@@ -172,7 +172,6 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
     }
 
     /// @dev STEP 3: Farmer ships the product to Distributor
-
     function shipByFarmer(uint256 _uid)
         public
         onlyFarmer
@@ -183,6 +182,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
 
         emit ShippedByFarmer(_uid);
     }
+    
     /// @dev STEP 4: Distributor receives the product shipped by Farmer.
     function receiveByDistributor(uint256 _uid)
         public
