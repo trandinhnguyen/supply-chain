@@ -23,14 +23,14 @@ async function main() {
   
   console.log(`Deployer address:  ${deployerAddress}`);
   console.log(`Deployer balance:  ${ethers.utils.formatEther(deployerBalance)}`);
-  console.log(`Deployment price:  ${ethers.utils.formatEther(deploymentPrice)}`);
-  if (deployerBalance.lt(deploymentPrice)) {
-    throw new Error(
-      `Insufficient funds. Top up your account balance by ${ethers.utils.formatEther(
-        deploymentPrice - deployerBalance,
-      )}`,
-    );
-  }
+  // console.log(`Deployment price:  ${ethers.utils.formatEther(deploymentPrice)}`);
+  // if (deployerBalance.lt(deploymentPrice)) {
+  //   throw new Error(
+  //     `Insufficient funds. Top up your account balance by ${ethers.utils.formatEther(
+  //       deploymentPrice - deployerBalance,
+  //     )}`,
+  //   );
+  // }
 
   const supplyChain = await SupplyChain.deploy();
 

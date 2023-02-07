@@ -52,8 +52,9 @@ contract Customer is Ownable {
         details[msg.sender].products.push(uid);
     }
 
-    function getAllCustomerProduct() public view returns (uint256[] memory) {
-        return details[msg.sender].products;
+    function getAllCustomerProduct(address account) public view returns (uint256[] memory) {
+        require(isCustomer(account));
+        return details[account].products;
     }
 
     function getCustomerProductCount() public view returns (uint256) {

@@ -182,7 +182,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
 
         emit ShippedByFarmer(_uid);
     }
-
+    
     /// @dev STEP 4: Distributor receives the product shipped by Farmer.
     function receiveByDistributor(uint256 _uid)
         public
@@ -353,18 +353,18 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         );
     }
 
-    function getAllProduct(Structure.State _state)
+    function getAllProductByState(Structure.State state_)
         public
-        view
-        returns (uint8[] memory)
-    {
-        uint256[] memory result = new uint256[](uid);
-        uint256 j = 0;
-        for (uint256 i = 1; i < uid; i++) {
-            require(products[i].productState == _state);
-            result[j] = i;
-            j++;
+        view 
+        returns (uint256[] memory) {
+            uint256[] memory result = new uint256[](uid);
+            uint j = 0;
+            for(uint i = 1; i < uid; i++)
+            {
+                require(products[i].productState == state_);
+                result[j] = i;
+                j++;
+            }
+            return result;
         }
-        return result;
-    }
 }
