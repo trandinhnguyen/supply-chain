@@ -182,7 +182,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
 
         emit ShippedByFarmer(_uid);
     }
-
+    
     /// @dev STEP 4: Distributor receives the product shipped by Farmer.
     function receiveByDistributor(uint256 _uid)
         public
