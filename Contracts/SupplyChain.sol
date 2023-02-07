@@ -352,4 +352,19 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
             product.transaction
         );
     }
+
+    function getAllProduct(Structure.State _state)
+        public
+        view
+        returns (uint8[] memory)
+    {
+        uint256[] memory result = new uint256[](uid);
+        uint256 j = 0;
+        for (uint256 i = 1; i < uid; i++) {
+            require(products[i].productState == _state);
+            result[j] = i;
+            j++;
+        }
+        return result;
+    }
 }
