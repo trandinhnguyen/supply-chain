@@ -7,15 +7,9 @@ const Admin = (props) => {
 
     const addFarmer = async (event) => {
 		event.preventDefault();
-        //contract.addFarmerRole(event.target.addFarmer.value);
-        let hasFarmerRole = await contract.hasFarmerRole(event.target.addFarmer.value)
-        if(hasFarmerRole){
-            setMessage("This account has been assigned to Farmer Role before")
-        }
-        else{
-            await contract.addFarmerRole(event.target.addFarmer.value);
-            setMessage("Add Farmer successfully !!!")
-        }
+        await contract.addFarmerRole(event.target.addFarmer.value)
+        .then(result => setMessage("Add Farmer successfully !!!"))
+        .catch(err => setMessage("This account has been assigned to Farmer Role before"));
 	}
 
     // if(account!=owner){
