@@ -87,13 +87,13 @@ contract Farmer is Ownable {
         details[msg.sender].products.push(uid);
     }
 
-    function getAllFarmerProduct()
+    function getAllFarmerProduct(address account)
         public
         view
-        onlyFarmer
         returns (uint256[] memory)
     {
-        return details[msg.sender].products;
+        require(isFarmer(account));
+        return details[account].products;
     }
 
     function getFarmerProductCount() public view onlyFarmer returns (uint256) {
