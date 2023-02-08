@@ -165,6 +165,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
     {
         products[_uid].distributor = msg.sender;
         products[_uid].stateChangeTimestamp = block.timestamp;
+        addDistributorProduct(_uid);
         products[_uid].productState = Structure.State.PurchasedByDistributor;
         productHistory[_uid].history.push(products[_uid]);
 
@@ -191,7 +192,6 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         shippedByFarmer(_uid)
     {
         products[_uid].owner = msg.sender;
-        addDistributorProduct(_uid);
 
         products[_uid].productState = Structure.State.ReceivedByDistributor;
         products[_uid].stateChangeTimestamp = block.timestamp;
@@ -207,6 +207,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         receivedByDistributor(_uid)
     {
         products[_uid].retailer = msg.sender;
+        addRetailerProduct(_uid);
         products[_uid].productState = Structure.State.PurchasedByRetailer;
         products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
@@ -234,7 +235,6 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         shippedByDistributor(_uid)
     {
         products[_uid].owner = msg.sender;
-        addRetailerProduct(_uid);
 
         products[_uid].productState = Structure.State.ReceivedByRetailer;
         products[_uid].stateChangeTimestamp = block.timestamp;
@@ -250,6 +250,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         receivedByRetailer(_uid)
     {
         products[_uid].customer = msg.sender;
+        addCustomerProduct(_uid);
         products[_uid].productState = Structure.State.PurchasedByCustomer;
         products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
@@ -277,7 +278,6 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         shippedByRetailer(_uid)
     {
         products[_uid].owner = msg.sender;
-        addCustomerProduct(_uid);
 
         products[_uid].productState = Structure.State.ReceivedByCustomer;
         products[_uid].stateChangeTimestamp = block.timestamp;
