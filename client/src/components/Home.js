@@ -89,6 +89,9 @@ const Home = () => {
 					<li>
 						<NavLink to="/farmer">Farmer</NavLink>
 					</li>
+          <li>
+						<NavLink to="/customer">Customer</NavLink>
+					</li>
 				</ul>
 				<hr/>
 			</div>
