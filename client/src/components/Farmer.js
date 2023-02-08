@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { productState } from "../utils/constants";
+import { noneFilter, productState, stateToString } from "../utils/constants";
 
 const Farmer = (props) => {
   const account = props.account;
@@ -44,14 +44,14 @@ const Farmer = (props) => {
           <td>{parseInt(product[0]._hex)}</td>
           <td>{parseInt(product[1]._hex)}</td>
           <td>{product[2]}</td>
-          <td>{product[3]}</td>
+          <td>{stateToString[product[3]]}</td>
           <td>{product[4]}</td>
           <td>{parseInt(product[5]._hex)}</td>
           <td>{parseInt(product[6]._hex)}</td>
-          <td>{product[7]}</td>
-          <td>{product[8]}</td>
-          <td>{product[9]}</td>
-          <td>{product[10]}</td>
+          <td>{noneFilter(product[7])}</td>
+          <td>{noneFilter(product[8])}</td>
+          <td>{noneFilter(product[9])}</td>
+          <td>{noneFilter(product[10])}</td>
           <td>{Date(product[11].toNumber())}</td>
           <td>
             {product[3] == productState.PurchasedByDistributor ? (
@@ -70,7 +70,7 @@ const Farmer = (props) => {
     try {
       const header = Object.keys(productList[0]);
       return header.map((key, index) => {
-        if (index > 11 && index < 23) return <th key={index}>{key}</th>;
+        if (index > 11 && index < 24) return <th key={index}>{key}</th>;
       });
     } catch (err) {
       return null;
