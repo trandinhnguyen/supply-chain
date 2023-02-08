@@ -17,11 +17,11 @@ import { NavLink } from "react-router-dom";
 
 const Home = () => {
   // const [errorMessage, setErrorMessage] = useState(null);
-//   const [currentAccount, setCurrentAccount] = useState(null);
-//   const [connButtonText, setConnButtonText] = useState("Connect Wallet");
-//   const [currentOwner, setCurrentOwner] = useState(null);
-//   const [farmer, setFarmer] = useState(null);
-//   const [product, setProduct] = useState(null);
+  //   const [currentAccount, setCurrentAccount] = useState(null);
+  //   const [connButtonText, setConnButtonText] = useState("Connect Wallet");
+  //   const [currentOwner, setCurrentOwner] = useState(null);
+  //   const [farmer, setFarmer] = useState(null);
+  //   const [product, setProduct] = useState(null);
 
   // const contractAddress ="0x64a4293c4002923dAE40cDc286Da8CD7cdB9D375"
 
@@ -73,10 +73,9 @@ const Home = () => {
   // 	contract.addFarmerRole(event.target.addFarmer.value);
   // }
 
-    return(
-      <div>
-			
-            {/* <form onSubmit={addFarmer}>
+  return (
+    <div>
+      {/* <form onSubmit={addFarmer}>
 				<input id="addFarmer" type="text"/>
 				<button type={"submit"}> Add Farmer </button>
 			</form>

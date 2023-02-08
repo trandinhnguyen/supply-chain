@@ -208,6 +208,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
     {
         products[_uid].retailer = msg.sender;
         addRetailerProduct(_uid);
+
         products[_uid].productState = Structure.State.PurchasedByRetailer;
         products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
@@ -377,4 +378,3 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         return result;
     }
 }
-

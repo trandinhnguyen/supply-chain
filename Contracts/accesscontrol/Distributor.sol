@@ -86,7 +86,11 @@ contract Distributor is Ownable {
         details[msg.sender].products.push(uid);
     }
 
-    function getAllDistributorProduct(address account) public view returns (uint256[] memory) {
+    function getAllDistributorProduct(address account)
+        public
+        view
+        returns (uint256[] memory)
+    {
         require(isDistributor(account));
         return details[account].products;
     }

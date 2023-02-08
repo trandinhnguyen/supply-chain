@@ -84,7 +84,11 @@ contract Retailer is Ownable {
         details[msg.sender].products.push(uid);
     }
 
-    function getAllRetailerProduct(address account) public view returns (uint256[] memory) {
+    function getAllRetailerProduct(address account)
+        public
+        view
+        returns (uint256[] memory)
+    {
         require(isRetailer(account));
         return details[account].products;
     }

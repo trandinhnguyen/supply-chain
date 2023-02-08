@@ -25,6 +25,12 @@ module.exports = {
         "b97b2b435d6487b3be6a449894dcddb9e9fda69b2e4c9733ddeb689f3654278c",
       ],
     },
+    bnb: {
+      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      accounts: [
+        "b97b2b435d6487b3be6a449894dcddb9e9fda69b2e4c9733ddeb689f3654278c",
+      ],
+    },
   },
   etherscan: {
     apiKey: {
