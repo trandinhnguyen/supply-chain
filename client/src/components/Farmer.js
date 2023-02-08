@@ -49,6 +49,7 @@ const Farmer = (props) => {
                   <td>{product[8]}</td>
                   <td>{product[9]}</td>
                   <td>{product[10]}</td>
+                  <td>{Date((product[11].toNumber()))}</td>
                   <td>
                     {product[3]==productState.PurchasedByDistributor ? (<button onClick={() => shipProduct(product[0])}> Ship product </button>) : null}
                   </td>
@@ -61,7 +62,7 @@ const Farmer = (props) => {
         try{
             const header = Object.keys(productList[0])
             return header.map((key, index) => {
-                if(index>11 && index<23) return <th key={index}>{key}</th>
+                if(index>11 && index<24) return <th key={index}>{key}</th>
             })
         }
         catch(err){

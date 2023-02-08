@@ -40,8 +40,12 @@ contract Customer is Ownable {
         emit CustomerRemoved(account);
     }
 
-    function addCustomer(address account) public onlyOwner {
-        _addCustomer(account, "", "");
+    function addCustomer(
+        address account,
+        string memory name,
+        string memory realAddress
+    ) public onlyOwner {
+        _addCustomer(account, name, realAddress);
     }
 
     function renounceCustomer() public onlyCustomer {

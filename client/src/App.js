@@ -6,6 +6,7 @@ import {Route, NavLink, Routes} from 'react-router-dom';
 import React, { Component } from "react";
 import {ethers} from  "ethers";
 import { contractABI, contractAddress } from "./utils/constants";
+import ProductHistory from "./components/ProductHistory";
 
 class App extends Component{
   state = {
@@ -72,6 +73,7 @@ class App extends Component{
             <Route exact path='/admin' element={<Admin account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
             <Route exact path='/farmer' element={<Farmer account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
             <Route exact path='/customer' element={<Customer account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
+            <Route exact path='/product-history' element={<ProductHistory account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
             <Route exact path='/' element={<Home />} />
           </Routes>
       </div>

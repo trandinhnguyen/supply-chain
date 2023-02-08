@@ -113,12 +113,10 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         address distributor;
         address retailer;
         address customer;
-        string memory transaction;
 
         product.distributor = distributor;
         product.retailer = retailer;
         product.customer = customer;
-        product.transaction = transaction;
     }
 
     function setProductDetailInfo(
@@ -149,6 +147,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         addFarmerProduct(uid);
 
         product.productState = Structure.State.ProducedByFarmer;
+        product.stateChangeTimestamp = block.timestamp;
         products[uid] = product;
         productHistory[uid].history.push(product);
 
@@ -165,6 +164,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         producedByFarmer(_uid)
     {
         products[_uid].distributor = msg.sender;
+        products[_uid].stateChangeTimestamp = block.timestamp;
         products[_uid].productState = Structure.State.PurchasedByDistributor;
         productHistory[_uid].history.push(products[_uid]);
 
@@ -178,6 +178,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         purchasedByDistributor(_uid)
     {
         products[_uid].productState = Structure.State.ShippedByFarmer;
+        products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
 
         emit ShippedByFarmer(_uid);
@@ -193,6 +194,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         addDistributorProduct(_uid);
 
         products[_uid].productState = Structure.State.ReceivedByDistributor;
+        products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
 
         emit ReceivedByDistributor(_uid);
@@ -206,6 +208,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
     {
         products[_uid].retailer = msg.sender;
         products[_uid].productState = Structure.State.PurchasedByRetailer;
+        products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
 
         emit PurchasedByRetailer(_uid);
@@ -218,6 +221,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         purchasedByRetailer(_uid)
     {
         products[_uid].productState = Structure.State.ShippedByDistributor;
+        products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
 
         emit ShippedByDistributor(_uid);
@@ -233,6 +237,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         addRetailerProduct(_uid);
 
         products[_uid].productState = Structure.State.ReceivedByRetailer;
+        products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
 
         emit ReceivedByRetailer(_uid);
@@ -246,6 +251,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
     {
         products[_uid].customer = msg.sender;
         products[_uid].productState = Structure.State.PurchasedByCustomer;
+        products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
 
         emit PurchasedByCustomer(_uid);
@@ -258,6 +264,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         purchasedByCustomer(_uid)
     {
         products[_uid].productState = Structure.State.ShippedByRetailer;
+        products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
 
         emit ShippedByRetailer(_uid);
@@ -273,6 +280,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         addCustomerProduct(_uid);
 
         products[_uid].productState = Structure.State.ReceivedByCustomer;
+        products[_uid].stateChangeTimestamp = block.timestamp;
         productHistory[_uid].history.push(products[_uid]);
 
         emit ReceivedByCustomer(_uid);
@@ -294,7 +302,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
             address distributor,
             address retailer,
             address customer,
-            string memory transaction
+            uint256 stateChangeTimestamp
         )
     {
         require(products[_uid].uid != 0);
@@ -311,7 +319,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
             product.distributor,
             product.retailer,
             product.customer,
-            product.transaction
+            product.stateChangeTimestamp
         );
     }
 
@@ -334,10 +342,10 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
             address distributor,
             address retailer,
             address customer,
-            string memory transaction
+            uint256 stateChangeTimestamp
         )
     {
-        require(products[_uid].uid != 0);
+        require(products[_uid].uid > 0 && _uid < uid);
         require(i < getProductHistoryLength(_uid));
 
         Structure.Product memory product = productHistory[_uid].history[i];
@@ -349,7 +357,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
             product.distributor,
             product.retailer,
             product.customer,
-            product.transaction
+            product.stateChangeTimestamp
         );
     }
 
@@ -369,4 +377,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
             }
             return result;
         }
+
+    
 }
+

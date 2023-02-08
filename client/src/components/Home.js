@@ -92,6 +92,9 @@ const Home = () => {
           <li>
 						<NavLink to="/customer">Customer</NavLink>
 					</li>
+          <li>
+						<NavLink to="/product-history">Product History</NavLink>
+					</li>
 				</ul>
 				<hr/>
 			</div>

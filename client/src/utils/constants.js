@@ -2,7 +2,7 @@ import abi from "./SupplyChain.json";
 
 export const contractABI = abi.abi;
 
-export const contractAddress = "0x409E338884FF31C25D7DEaF5bB474DF264Aa7E59";
+export const contractAddress = "0x0f7DBa91787e786FE0443e5407c023eD7858fb08";
 
 
 export const productState = {

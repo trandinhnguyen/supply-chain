@@ -38,7 +38,7 @@ library Structure {
         address distributor;
         address retailer;
         address customer;
-        string transaction;
+        uint256 stateChangeTimestamp;
     }
 
     struct ProductHistory {
