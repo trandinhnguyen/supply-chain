@@ -18,15 +18,58 @@ const Farmer = (props) => {
 	}
 
     const getMyProductList = async () =>{
+        setProductList([])
         await contract.getAllFarmerProduct(account)
         .then(result => result.map(async (x) => {
             await contract.getProductDetail(x).then(result => {
                 setProductList(productList => [...productList, result]);
-                console.log(productList)
+                //setProductList(result)
+                console.log(productList[1])
             }
             )
         }))
         .catch(err => setMessage("This account don't have Farmer Role"))
+    }
+
+    const renderProductListData = () => {
+        return productList.map(product => {
+            return (
+                <tr key={product[0]}>
+                  <td>{product[0]._hex}</td>
+                  <td>{product[1]._hex}</td>
+                  <td>{product[2]}</td>
+                  <td>{product[3]}</td>
+                  <td>{product[4]}</td>
+                  <td>{product[5]._hex}</td>
+                  <td>{product[6]._hex}</td>
+                  <td>{product[7]}</td>
+                  <td>{product[8]}</td>
+                  <td>{product[9]}</td>
+                  <td>{product[10]}</td>
+                  <td>
+                    {product[3]==0 ? (<button onClick={() => shipProduct(product[0])}> Ship product </button>) : null}
+                  </td>
+                </tr>
+              )
+        })
+    }
+
+    const renderTableHeader = () => {
+        try{
+            const header = Object.keys(productList[0])
+            return header.map((key, index) => {
+                if(index>11 && index<23) return <th key={index}>{key}</th>
+            })
+        }
+        catch(err){
+            return null
+        }
+      }
+
+    const shipProduct = async (uid) => {
+        await contract.shipByFarmer(uid)
+        .then(result => setMessage("Ship to distributor successfully !!!"))
+        .catch(err => setMessage("Can't ship product because You aren't farmer or no distributor avalable"));
     }
 
     return(
@@ -46,7 +89,12 @@ const Farmer = (props) => {
 			</form>
             <button onClick={getMyProductList}> Get My Products </button>
             <h5>{message}</h5>
-            {productList[0].farmer}
+            <table>
+                <tbody>
+                    <tr>{renderTableHeader()}</tr>
+                    {renderProductListData()}
+                </tbody>
+            </table>
         </div>
     )
 }
