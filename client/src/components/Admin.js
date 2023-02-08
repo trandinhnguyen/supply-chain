@@ -13,7 +13,7 @@ const Admin = (props) => {
         )
         .then(result => setMessage("Add Farmer successfully !!!"))
         .catch(err => {
-            setMessage(err.message);
+            setMessage("Cannot add farmer");
         });
 	}
 
