@@ -1,18 +1,18 @@
 import React, {useState} from 'react'
 import {productState} from '../utils/constants'
-import {BigNumber} from 'ethers'
 
 const Customer = (props) => {
     const account=props.account
-    const owner=props.owner
     const contract = props.contract
     const [message, setMessage] = useState()
     const [purchaseableProducts, setPurchaseableProducts] = useState([])
+    const [myProducts, setMyProducts] = useState([])
     
     const getPurchaseableProducts = async () =>{
         setPurchaseableProducts([])
-        await contract.getAllProductByState(productState.ProducedByFarmer)
+        await contract.getAllProductByState(productState.ReceivedByRetailer)
         .then(result => result.map(async (x) => {
+            if(x != 0)
             await contract.getProductDetail(x).then(result => {
                 setPurchaseableProducts(purchaseableProducts => [...purchaseableProducts, result]);
             }
@@ -21,13 +21,31 @@ const Customer = (props) => {
         .catch(err => setMessage("Failed to fetch products"))
     }
 
+    const getMyProductList = async () =>{
+        setMyProducts([])
+        await contract.getAllCustomerProduct(account)
+        .then(result => result.map(async (x) => {
+            await contract.getProductDetail(x).then(result => {
+                setMyProducts(myProducts => [...myProducts, result]);
+            }
+            )
+        }))
+        .catch(err => setMessage("This account doesn't have Customer Role"))
+    }
+
     const purchaseProduct = async (uid) => {
         await contract.purchaseByCustomer(uid)
         .then(result => setMessage("Purchase successfully !!!"))
-        .catch(err => setMessage("An error occured, please try again"));
+        .catch(err => setMessage("An error occured, please try again later"));
     }
 
-    const renderProductListData = (productList) => {
+    const receiveProduct = async (uid) => {
+        await contract.receiveByCustomer(uid)
+        .then(result => setMessage("Received successfully !!!"))
+        .catch(err => setMessage("An error occured, please try again later"));
+    }
+
+    const renderProductListData = (productList, condition, action) => {
         return productList.length > 0 ? productList.map(product => {
             return (
                 <tr key={product[0]}>
@@ -43,7 +61,8 @@ const Customer = (props) => {
                   <td>{product[9]}</td>
                   <td>{product[10]}</td>
                   <td>
-                    <button onClick={() => purchaseProduct(product[0])}> Buy product </button>
+                    {product[3] == condition ? (<button onClick={() => action(product[0])}> Ship product </button>) : null}
+                    
                   </td>
                 </tr>
               )
@@ -56,6 +75,7 @@ const Customer = (props) => {
             const header = Object.keys(productList[0])
             return header.map((key, index) => {
                 if(index>11 && index<23) return <th key={index}>{key}</th>
+                return null
             })
         }
         catch(err){
@@ -65,12 +85,20 @@ const Customer = (props) => {
     return (
         <div>
             <h3>Customer Page</h3>
-            <button onClick={getPurchaseableProducts}> Get Purchaseable Products </button>
+            <button onClick={getPurchaseableProducts}> View My Products </button>
             <h5>{message}</h5>
             <table>
                 <tbody>
                     <tr>{renderTableHeader(purchaseableProducts)}</tr>
-                    {renderProductListData(purchaseableProducts)}
+                    {renderProductListData(purchaseableProducts, productState.ReceivedByRetailer, purchaseProduct)}
+                </tbody>
+            </table>
+            <button onClick={getMyProductList}> Get My Products </button>
+            <h5>{message}</h5>
+            <table>
+                <tbody>
+                    <tr>{renderTableHeader(myProducts)}</tr>
+                    {renderProductListData(myProducts, productState.ShippedByRetailer, receiveProduct)}
                 </tbody>
             </table>
         </div>

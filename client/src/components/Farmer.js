@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import {productState} from '../utils/constants'
+
 const Farmer = (props) => {
     const account=props.account
     const owner=props.owner
@@ -21,6 +23,7 @@ const Farmer = (props) => {
         setProductList([])
         await contract.getAllFarmerProduct(account)
         .then(result => result.map(async (x) => {
+            if(x != 0)
             await contract.getProductDetail(x).then(result => {
                 setProductList(productList => [...productList, result]);
                 //setProductList(result)
@@ -28,7 +31,7 @@ const Farmer = (props) => {
             }
             )
         }))
-        .catch(err => setMessage("This account don't have Farmer Role"))
+        .catch(err => setMessage("This account doesn't have Farmer Role"))
     }
 
     const renderProductListData = () => {
@@ -47,7 +50,7 @@ const Farmer = (props) => {
                   <td>{product[9]}</td>
                   <td>{product[10]}</td>
                   <td>
-                    {product[3]==0 ? (<button onClick={() => shipProduct(product[0])}> Ship product </button>) : null}
+                    {product[3]==productState.PurchasedByDistributor ? (<button onClick={() => shipProduct(product[0])}> Ship product </button>) : null}
                   </td>
                 </tr>
               )
