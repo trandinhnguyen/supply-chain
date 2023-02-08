@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from "react";
 const Admin = (props) => {
-    const account=props.account
-    const owner=props.owner
-    const contract = props.contract
-    const [message, setMessage] = useState()
+  const account = props.account;
+  const owner = props.owner;
+  const contract = props.contract;
+  const [message, setMessage] = useState();
 
     const addFarmer = async (event) => {
 		event.preventDefault();

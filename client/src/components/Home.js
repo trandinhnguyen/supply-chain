@@ -23,60 +23,55 @@ const Home = () => {
 //   const [farmer, setFarmer] = useState(null);
 //   const [product, setProduct] = useState(null);
 
-    // const contractAddress ="0x64a4293c4002923dAE40cDc286Da8CD7cdB9D375"
+  // const contractAddress ="0x64a4293c4002923dAE40cDc286Da8CD7cdB9D375"
 
-    // const [errorMessage, setErrorMessage] = useState(null);
-	// const [defaultAccount, setDefaultAccount] = useState(null);
-	// const [connButtonText, setConnButtonText] = useState('Connect Wallet');
+  // const [errorMessage, setErrorMessage] = useState(null);
+  // const [defaultAccount, setDefaultAccount] = useState(null);
+  // const [connButtonText, setConnButtonText] = useState('Connect Wallet');
 
-	// const [currentOwner, setCurrentOwner] = useState(null);
+  // const [currentOwner, setCurrentOwner] = useState(null);
 
-	// const [provider, setProvider] = useState(null);
-	// const [signer, setSigner] = useState(null);
-	// const [contract, setContract] = useState(null);
+  // const [provider, setProvider] = useState(null);
+  // const [signer, setSigner] = useState(null);
+  // const [contract, setContract] = useState(null);
 
-    // const connectWalletHandler=()=>{
-    //     if(window.ethereum){
-    //         window.ethereum.request({ method: 'eth_requestAccounts'})
-    //         .then(result => {
-	// 			accountChangedHandler(result[0]);
-	// 			setConnButtonText('Wallet Connected');
-	// 		})
-	// 		.catch(error => {
-	// 			setErrorMessage(error.message);
-			
-	// 		});
-    //     }
-    //     else{
-    //         setErrorMessage("Need to install Metamask")
-    //     }
-    // }
+  // const connectWalletHandler=()=>{
+  //     if(window.ethereum){
+  //         window.ethereum.request({ method: 'eth_requestAccounts'})
+  //         .then(result => {
+  // 			accountChangedHandler(result[0]);
+  // 			setConnButtonText('Wallet Connected');
+  // 		})
+  // 		.catch(error => {
+  // 			setErrorMessage(error.message);
 
-    // const accountChangedHandler = (newAccount) => {
-	// 	setDefaultAccount(newAccount);
-    //     updateEthers();
-	// }
+  // 		});
+  //     }
+  //     else{
+  //         setErrorMessage("Need to install Metamask")
+  //     }
+  // }
 
-    // const updateEthers = () => {
-	// 	let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-	// 	setProvider(tempProvider);
+  // const accountChangedHandler = (newAccount) => {
+  // 	setDefaultAccount(newAccount);
+  //     updateEthers();
+  // }
 
-	// 	let tempSigner = tempProvider.getSigner();
-	// 	setSigner(tempSigner);
+  // const updateEthers = () => {
+  // 	let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
+  // 	setProvider(tempProvider);
 
-	// 	let tempContract = new ethers.Contract(contractAddress, SupplyChainContract.abi, tempSigner);
-	// 	setContract(tempContract);	
-	// }
+  // 	let tempSigner = tempProvider.getSigner();
+  // 	setSigner(tempSigner);
 
-    // const addFarmer = (event) => {
-	// 	event.preventDefault();
-	// 	contract.addFarmerRole(event.target.addFarmer.value);
-	// }
+  // 	let tempContract = new ethers.Contract(contractAddress, SupplyChainContract.abi, tempSigner);
+  // 	setContract(tempContract);
+  // }
 
-    // const getCurrentOwner = async () => {
-	// 	let val = await contract.owner();
-	// 	setCurrentOwner(val);
-	// }
+  // const addFarmer = (event) => {
+  // 	event.preventDefault();
+  // 	contract.addFarmerRole(event.target.addFarmer.value);
+  // }
 
     return(
         <div>
@@ -88,6 +83,12 @@ const Home = () => {
 					</li>
 					<li>
 						<NavLink to="/farmer">Farmer</NavLink>
+					</li>
+          <li>
+						<NavLink to="/distributor">Distributor</NavLink>
+					</li>
+          <li>
+						<NavLink to="/retailer">Retailer</NavLink>
 					</li>
           <li>
 						<NavLink to="/customer">Customer</NavLink>
@@ -105,9 +106,9 @@ const Home = () => {
             <button onClick={getCurrentOwner}> Get Current Contract Owner </button>
             {currentOwner}
             {errorMessage} */}
-        </div>
-    )
-}
+    </div>
+  );
+};
 
 /*
       await supplyChainHash.wait();
@@ -234,4 +235,3 @@ const Home = () => {
 */
 
 export default Home;
-
