@@ -59,7 +59,7 @@ const Customer = (props) => {
                   <td>{noneFilter(product[10])}</td>
                   <td>{Date((product[11].toNumber()))}</td>
                   <td>
-                    {product[3] == condition ? (<button onClick={() => action(product[0])}> {actionName} </button>) : null}
+                    {product[3] == condition ? (<button className="btn-form" onClick={() => action(product[0])}> {actionName} </button>) : null}
                     
                   </td>
                 </tr>
