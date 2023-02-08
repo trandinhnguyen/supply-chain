@@ -83,14 +83,18 @@ const Customer = (props) => {
     return (
         <div className='Farmer-container'>
             <h3>Customer Page</h3>
-            <button onClick={getPurchaseableProducts} className="btn-form"> View Purchaseable Products </button>
+            <h3 className="pointer" onClick={getPurchaseableProducts}>
+              Market
+            </h3>
             <table className='table-farmer'>
                 <tbody>
                     <tr className='table-header'>{renderTableHeader(purchaseableProducts)}</tr>
                     {renderProductListData(purchaseableProducts, productState.ReceivedByRetailer, purchaseProduct, 'purchase')}
                 </tbody>
             </table>
-            <button onClick={getMyProductList} className="btn-form"> Get My Purchased Products </button>
+            <h3 className="pointer" onClick={getMyProductList}>
+              My Product
+            </h3>
             <table className='table-farmer'>
                 <tbody>
                     <tr className='table-header'>{renderTableHeader(myProducts)}</tr>
