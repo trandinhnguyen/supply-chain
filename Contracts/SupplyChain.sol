@@ -122,12 +122,12 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
     function setProductDetailInfo(
         Structure.Product memory product,
         string memory productName,
-        uint256 productCode,
-        uint256 productPrice
+        uint256 productPrice,
+        uint256 productCode
     ) internal pure {
         product.productDetail.productName = productName;
-        product.productDetail.productCode = productCode;
         product.productDetail.productPrice = productPrice;
+        product.productDetail.productCode = productCode;
     }
 
     ///@dev STEP 1: Farmer produces a product.

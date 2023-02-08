@@ -9,7 +9,9 @@ import { contractABI, contractAddress } from "./utils/constants";
 import ProductHistory from "./components/ProductHistory";
 import { Distributor } from "./components/Distributor";
 
-class App extends Component {
+import './App.css'
+class App extends Component{
+
   state = {
     errorMessage: null,
     defaultAccount: null,
@@ -60,20 +62,30 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          <nav>
-            <NavLink to="/">Home</NavLink>
+        <div >
+          <nav className="nav">
+              <NavLink to='/' className="nav-item">Home</NavLink>
+              <NavLink to="/admin" className="nav-item">Admin</NavLink>
+              <NavLink to="/farmer" className="nav-item">Farmer</NavLink>
           </nav>
-          <button onClick={this.getCurrentOwner}>
-            {" "}
-            Get Current Contract Owner{" "}
-          </button>
-          {this.state.currentOwner}
+        </div>
+        <div className="container">
+          <div className="btn-owner">
+            <button className="btn" onClick={this.getCurrentOwner}> Get Current Contract Owner </button>
+            {this.state.currentOwner&&<div className="content">
+            {this.state.currentOwner}
+            </div>}
+          </div>
+          
           <div>
             <h3>Connect to Metamask</h3>
-            <button onClick={this.connectWalletHandler}>
-              {this.state.connButtonText}
-            </button>
-            <h3>Address: {this.state.defaultAccount}</h3>
+            <button className="btn"  onClick={this.connectWalletHandler }>{this.state.connButtonText}</button>
+            {/* <h3>Address: {this.state.defaultAccount}</h3> */}
+            {this.state.defaultAccount&&<div className="content">
+             {this.state.defaultAccount}
+            </div>}
+          </div>
+          <hr/>
           </div>
           <Routes>
             <Route exact path='/admin' element={<Admin account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
