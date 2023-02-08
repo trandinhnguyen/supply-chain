@@ -165,6 +165,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         producedByFarmer(_uid)
     {
         products[_uid].distributor = msg.sender;
+        addDistributorProduct(_uid);
         products[_uid].productState = Structure.State.PurchasedByDistributor;
         productHistory[_uid].history.push(products[_uid]);
 
@@ -190,7 +191,6 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         shippedByFarmer(_uid)
     {
         products[_uid].owner = msg.sender;
-        addDistributorProduct(_uid);
 
         products[_uid].productState = Structure.State.ReceivedByDistributor;
         productHistory[_uid].history.push(products[_uid]);
@@ -205,6 +205,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         receivedByDistributor(_uid)
     {
         products[_uid].retailer = msg.sender;
+        addRetailerProduct(_uid);
         products[_uid].productState = Structure.State.PurchasedByRetailer;
         productHistory[_uid].history.push(products[_uid]);
 
@@ -230,7 +231,6 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         shippedByDistributor(_uid)
     {
         products[_uid].owner = msg.sender;
-        addRetailerProduct(_uid);
 
         products[_uid].productState = Structure.State.ReceivedByRetailer;
         productHistory[_uid].history.push(products[_uid]);
@@ -245,6 +245,7 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         receivedByRetailer(_uid)
     {
         products[_uid].customer = msg.sender;
+        addCustomerProduct(_uid);
         products[_uid].productState = Structure.State.PurchasedByCustomer;
         productHistory[_uid].history.push(products[_uid]);
 
@@ -270,7 +271,6 @@ contract SupplyChain is Farmer, Distributor, Retailer, Customer {
         shippedByRetailer(_uid)
     {
         products[_uid].owner = msg.sender;
-        addCustomerProduct(_uid);
 
         products[_uid].productState = Structure.State.ReceivedByCustomer;
         productHistory[_uid].history.push(products[_uid]);
