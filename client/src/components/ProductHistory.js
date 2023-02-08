@@ -30,10 +30,10 @@ export default function ProductHistory(props) {
                 <tr key={product[0]}>
                   <td>{product[0]}</td>
                   <td>{product[1]}</td>
-                  <td>{product[2]}</td>
-                  <td>{product[3]}</td>
-                  <td>{product[4]}</td>
-                  <td>{product[5]}</td>
+                  <td>{product[2] != 0 ? product[2] : 'None'}</td>
+                  <td>{product[3] != 0 ? product[3] : 'None'}</td>
+                  <td>{product[4] != 0 ? product[4] : 'None'}</td>
+                  <td>{product[5] != 0 ? product[5] : 'None'}</td>
                   <td>{Date(product[6].toNumber())}</td>
                   </tr>
               )
@@ -53,16 +53,18 @@ export default function ProductHistory(props) {
       }
 
     return (
-        <div>
+        <div className='Farmer-container'>
             <form onSubmit={getProductHistory}>
                 <label htmlFor="productUid">Product Uid</label>
+                <br></br>
                 <input id="productUid" type="text"/>
-                <button type={"submit"}> Get Product History </button>
+                <br></br>
+                <button type={"submit"} className="btn-form"> Get Product History </button>
             </form>
             <h5>{message}</h5>
-            <table>
+            <table className='table-farmer'>
                 <tbody>
-                    <tr>{renderTableHeader()}</tr>
+                    <tr className='table-header'>{renderTableHeader()}</tr>
                     {renderProductListData()}
                 </tbody>
             </table>
