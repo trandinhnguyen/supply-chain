@@ -1,6 +1,7 @@
 import Home from "./components/Home";
 import Admin from "./components/Admin";
 import Farmer from "./components/Farmer";
+import Customer from "./components/Customer";
 import {Route, NavLink, Routes} from 'react-router-dom';
 import React, { Component } from "react";
 import {ethers} from  "ethers";
@@ -70,6 +71,7 @@ class App extends Component{
           <Routes>
             <Route exact path='/admin' element={<Admin account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
             <Route exact path='/farmer' element={<Farmer account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
+            <Route exact path='/customer' element={<Customer account={this.state.defaultAccount} contract={this.state.contract} owner={this.state.currentOwner}/>} />
             <Route exact path='/' element={<Home />} />
           </Routes>
       </div>
