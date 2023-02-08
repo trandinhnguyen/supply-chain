@@ -16,3 +16,23 @@ export const productState = {
   ShippedByRetailer: 8,
   ReceivedByCustomer: 9,
 };
+
+export const stateToString = [
+  'ProducedByFarmer',
+  'PurchasedByDistributor',
+  'ShippedByFarmer',
+  'ReceivedByDistributor',
+  'PurchasedByRetailer',
+  'ShippedByDistributor',
+  'ReceivedByRetailer',
+  'PurchasedByCustomer',
+  'ShippedByRetailer',
+  'ReceivedByCustomer',
+]
+
+
+export const noneFilter = (value) => {
+  if(value == 0)
+    return 'None';
+  return value;
+}

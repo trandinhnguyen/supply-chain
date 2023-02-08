@@ -1,10 +1,8 @@
 import {useState} from 'react'
+import { noneFilter , stateToString } from '../utils/constants'
 
 export default function ProductHistory(props) {
-    const account=props.account
-    const owner=props.owner
     const contract = props.contract
-    const [message, setMessage] = useState()
     const [productList, setProductList] = useState([])
 
     const getProductHistory = async (event) => {
@@ -21,19 +19,19 @@ export default function ProductHistory(props) {
                 })
             }
         })
-        .catch(err => setMessage("Invalid Uid"));
+        .catch(err => alert("Invalid Uid"));
 	}
     
     const renderProductListData = () => {
         return productList.map(product => {
             return (
-                <tr key={product[0]}>
+                <tr key={product[1]}>
                   <td>{product[0]}</td>
-                  <td>{product[1]}</td>
-                  <td>{product[2] != 0 ? product[2] : 'None'}</td>
-                  <td>{product[3] != 0 ? product[3] : 'None'}</td>
-                  <td>{product[4] != 0 ? product[4] : 'None'}</td>
-                  <td>{product[5] != 0 ? product[5] : 'None'}</td>
+                  <td>{stateToString[product[1]]}</td>
+                  <td>{noneFilter(product[2])}</td>
+                  <td>{noneFilter(product[3])}</td>
+                  <td>{noneFilter(product[4])}</td>
+                  <td>{noneFilter(product[5])}</td>
                   <td>{Date(product[6].toNumber())}</td>
                   </tr>
               )
@@ -44,7 +42,8 @@ export default function ProductHistory(props) {
         try{
             const header = Object.keys(productList[0])
             return header.map((key, index) => {
-                if(index>6) return <th key={index}>{key}</th>
+                if(index>6) return <th key={index}>{key}</th>;
+                return null;
             })
         }
         catch(err){
@@ -61,7 +60,6 @@ export default function ProductHistory(props) {
                 <br></br>
                 <button type={"submit"} className="btn-form"> Get Product History </button>
             </form>
-            <h5>{message}</h5>
             <table className='table-farmer'>
                 <tbody>
                     <tr className='table-header'>{renderTableHeader()}</tr>
