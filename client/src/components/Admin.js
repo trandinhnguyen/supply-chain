@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Admin = (props) => {
-  const owner = props.owner;
   const contract = props.contract;
-  const account = props.account;
-  const [message, setMessage] = useState();
 
   const addFarmer = async (event) => {
     event.preventDefault();
@@ -14,10 +11,9 @@ const Admin = (props) => {
         event.target.farmerName.value,
         event.target.farmerRealAddress.value
       )
-      .then((result) => setMessage("Add Farmer successfully !!!"))
+      .then((result) => alert("Add Farmer successfully !!!"))
       .catch((err) => {
-        setMessage("Can't add Farmer");
-        alert(message);
+        alert("Can't add Farmer");
       });
   };
 
@@ -29,10 +25,9 @@ const Admin = (props) => {
         event.target.distributorName.value,
         event.target.distributorRealAddress.value
       )
-      .then((result) => setMessage("Add Distributor successfully !!!"))
+      .then((result) => alert("Add Distributor successfully !!!"))
       .catch((err) => {
-        setMessage("Can't add Distributor");
-        alert(message);
+        alert("Can't add Distributor");
       });
   };
 
@@ -44,10 +39,9 @@ const Admin = (props) => {
         event.target.retailerName.value,
         event.target.retailerRealAddress.value
       )
-      .then((result) => setMessage("Add Retailer successfully !!!"))
+      .then((result) => alert("Add Retailer successfully !!!"))
       .catch((err) => {
-        setMessage("Can't add Retailer");
-        alert(message);
+        alert("Can't add Retailer");
       });
   };
 
@@ -59,7 +53,7 @@ const Admin = (props) => {
         event.target.customerName.value,
         event.target.customerRealAddress.value
       )
-      .then((result) => setMessage("Add Customer successfully !!!"))
+      .then((result) => alert("Add Customer successfully !!!"))
       .catch((err) => {
         alert("Can't add Customer");
       });
