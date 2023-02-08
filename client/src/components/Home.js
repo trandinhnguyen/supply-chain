@@ -1,30 +1,27 @@
 import React, { useState } from "react";
-import { ethers } from "ethers";
-// import SupplyChainContract from "./utils/SupplyChain.json";
-import { contractABI, contractAddress } from "../utils/constants";
 import { NavLink } from "react-router-dom";
 
-const { ethereum } = window;
+// const { ethereum } = window;
 
-const getEthereumContract = () => {
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const supplyChainContract = new ethers.Contract(
-    contractAddress,
-    contractABI,
-    signer
-  );
+// const getEthereumContract = () => {
+//   const provider = new ethers.providers.Web3Provider(ethereum);
+//   const signer = provider.getSigner();
+//   const supplyChainContract = new ethers.Contract(
+//     contractAddress,
+//     contractABI,
+//     signer
+//   );
 
-  return supplyChainContract;
-};
+//   return supplyChainContract;
+// };
 
 const Home = () => {
   // const [errorMessage, setErrorMessage] = useState(null);
-  const [currentAccount, setCurrentAccount] = useState(null);
-  const [connButtonText, setConnButtonText] = useState("Connect Wallet");
-  const [currentOwner, setCurrentOwner] = useState(null);
-  const [farmer, setFarmer] = useState(null);
-  const [product, setProduct] = useState(null);
+  //   const [currentAccount, setCurrentAccount] = useState(null);
+  //   const [connButtonText, setConnButtonText] = useState("Connect Wallet");
+  //   const [currentOwner, setCurrentOwner] = useState(null);
+  //   const [farmer, setFarmer] = useState(null);
+  //   const [product, setProduct] = useState(null);
 
   // const contractAddress ="0x64a4293c4002923dAE40cDc286Da8CD7cdB9D375"
 
@@ -94,6 +91,12 @@ const Home = () => {
           </li>
           <li>
             <NavLink to="/distributor">Distributor</NavLink>
+          </li>
+          <li>
+            <NavLink to="/retailer">Retailer</NavLink>
+          </li>
+          <li>
+            <NavLink to="/customer">Customer</NavLink>
           </li>
         </ul>
         <hr />

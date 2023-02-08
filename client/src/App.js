@@ -2,10 +2,12 @@ import Home from "./components/Home";
 import Admin from "./components/Admin";
 import Farmer from "./components/Farmer";
 import { Distributor } from "./components/Distributor";
+import Customer from "./components/Customer";
 import { Route, NavLink, Routes } from "react-router-dom";
 import React, { Component } from "react";
 import { ethers } from "ethers";
-import SupplyChainContract from "./artifacts/SupplyChain.json";
+import { contractABI, contractAddress } from "./utils/constants";
+import { Retailer } from "./components/Retailer";
 
 class App extends Component {
   state = {
@@ -40,14 +42,13 @@ class App extends Component {
   };
 
   updateEthers = () => {
-    const contractAddress = "0x6afA79D9073BE2a7b1c018Ef53069c8d5fDfa005";
     let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
 
     let tempSigner = tempProvider.getSigner();
 
     let tempContract = new ethers.Contract(
       contractAddress,
-      SupplyChainContract.abi,
+      contractABI,
       tempSigner
     );
 
@@ -70,18 +71,23 @@ class App extends Component {
           <nav>
             <NavLink to="/">Home</NavLink>
           </nav>
+
           <button onClick={this.getCurrentOwner}>
             {" "}
             Get Current Contract Owner{" "}
           </button>
           {this.state.currentOwner}
+
           <div>
             <h3>Connect to Metamask</h3>
+
             <button onClick={this.connectWalletHandler}>
               {this.state.connButtonText}
             </button>
-            <h3>Address: {this.state.defaultAccount}</h3>
+
+            <h4>My Address: {this.state.defaultAccount}</h4>
           </div>
+
           <Routes>
             <Route
               exact
@@ -94,6 +100,7 @@ class App extends Component {
                 />
               }
             />
+
             <Route
               exact
               path="/farmer"
@@ -105,6 +112,19 @@ class App extends Component {
                 />
               }
             />
+
+            <Route
+              exact
+              path="/customer"
+              element={
+                <Customer
+                  account={this.state.defaultAccount}
+                  contract={this.state.contract}
+                  owner={this.state.currentOwner}
+                />
+              }
+            />
+
             <Route
               exact
               path="/distributor"
@@ -116,6 +136,19 @@ class App extends Component {
                 />
               }
             />
+
+            <Route
+              exact
+              path="/retailer"
+              element={
+                <Retailer
+                  account={this.state.defaultAccount}
+                  contract={this.state.contract}
+                  owner={this.state.currentOwner}
+                />
+              }
+            />
+
             <Route exact path="/" element={<Home />} />
           </Routes>
         </div>
