@@ -45,7 +45,7 @@ const Customer = (props) => {
         .catch(err => setMessage("An error occured, please try again later"));
     }
 
-    const renderProductListData = (productList, condition, action) => {
+    const renderProductListData = (productList, condition, action, actionName) => {
         return productList.length > 0 ? productList.map(product => {
             return (
                 <tr key={product[0]}>
@@ -60,8 +60,9 @@ const Customer = (props) => {
                   <td>{product[8]}</td>
                   <td>{product[9]}</td>
                   <td>{product[10]}</td>
+                  <td>{Date((product[11].toNumber()))}</td>
                   <td>
-                    {product[3] == condition ? (<button onClick={() => action(product[0])}> Ship product </button>) : null}
+                    {product[3] == condition ? (<button onClick={() => action(product[0])}> {actionName} </button>) : null}
                     
                   </td>
                 </tr>
@@ -90,7 +91,7 @@ const Customer = (props) => {
             <table>
                 <tbody>
                     <tr>{renderTableHeader(purchaseableProducts)}</tr>
-                    {renderProductListData(purchaseableProducts, productState.ReceivedByRetailer, purchaseProduct)}
+                    {renderProductListData(purchaseableProducts, productState.ReceivedByRetailer, purchaseProduct, 'purchase')}
                 </tbody>
             </table>
             <button onClick={getMyProductList}> Get My Products </button>
@@ -98,7 +99,7 @@ const Customer = (props) => {
             <table>
                 <tbody>
                     <tr>{renderTableHeader(myProducts)}</tr>
-                    {renderProductListData(myProducts, productState.ShippedByRetailer, receiveProduct)}
+                    {renderProductListData(myProducts, productState.ShippedByRetailer, receiveProduct, 'confirm receive')}
                 </tbody>
             </table>
         </div>
