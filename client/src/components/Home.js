@@ -74,31 +74,8 @@ const Home = () => {
   // }
 
     return(
-        <div>
-			<div className='content'>
-				<h3>Visit as:</h3>
-				<ul className='menu'>
-					<li>
-						<NavLink to="/admin">Admin</NavLink>
-					</li>
-					<li>
-						<NavLink to="/farmer">Farmer</NavLink>
-					</li>
-          <li>
-						<NavLink to="/distributor">Distributor</NavLink>
-					</li>
-          <li>
-						<NavLink to="/retailer">Retailer</NavLink>
-					</li>
-          <li>
-						<NavLink to="/customer">Customer</NavLink>
-					</li>
-          <li>
-						<NavLink to="/product-history">Product History</NavLink>
-					</li>
-				</ul>
-				<hr/>
-			</div>
+      <div>
+			
             {/* <form onSubmit={addFarmer}>
 				<input id="addFarmer" type="text"/>
 				<button type={"submit"}> Add Farmer </button>

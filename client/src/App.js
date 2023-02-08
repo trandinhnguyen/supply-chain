@@ -67,6 +67,11 @@ class App extends Component{
               <NavLink to='/' className="nav-item">Home</NavLink>
               <NavLink to="/admin" className="nav-item">Admin</NavLink>
               <NavLink to="/farmer" className="nav-item">Farmer</NavLink>
+              <NavLink to="/distributor" className="nav-item">Distributor</NavLink>
+              <NavLink to="/retailer" className="nav-item">Retailer</NavLink>
+              <NavLink to="/customer" className="nav-item">Customer</NavLink>
+              <NavLink to="/product-history" className="nav-item">Product History</NavLink>
+              
           </nav>
         </div>
         <div className="container">
