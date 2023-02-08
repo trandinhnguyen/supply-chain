@@ -86,7 +86,7 @@ const Customer = (props) => {
     return (
         <div className='Farmer-container'>
             <h3>Customer Page</h3>
-            <button onClick={getPurchaseableProducts} className="btn-form"> View My Products </button>
+            <button onClick={getPurchaseableProducts} className="btn-form"> View Purchaseable Products </button>
             <h5>{message}</h5>
             <table className='table-farmer'>
                 <tbody>
@@ -94,7 +94,7 @@ const Customer = (props) => {
                     {renderProductListData(purchaseableProducts, productState.ReceivedByRetailer, purchaseProduct, 'purchase')}
                 </tbody>
             </table>
-            <button onClick={getMyProductList} className="btn-form"> Get My Products </button>
+            <button onClick={getMyProductList} className="btn-form"> Get My Purchased Products </button>
             <h5>{message}</h5>
             <table className='table-farmer'>
                 <tbody>
