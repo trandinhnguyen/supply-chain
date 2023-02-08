@@ -15,8 +15,8 @@ const Farmer = (props) => {
             event.target.productPrice.value,
             event.target.productCode.value
         )
-        .then(result => setMessage("Add product successfully !!!"))
-        .catch(err => setMessage("You don't have Farmer Role"));
+        .then(result => alert("Add product successfully !!!"))
+        .catch(err => alert("You don't have Farmer Role"));
 	}
 
     const getMyProductList = async () =>{
@@ -31,7 +31,7 @@ const Farmer = (props) => {
             }
             )
         }))
-        .catch(err => setMessage("This account doesn't have Farmer Role"))
+        .catch(err => alert("This account don't have Farmer Role"))
     }
 
     const renderProductListData = () => {
@@ -72,8 +72,8 @@ const Farmer = (props) => {
 
     const shipProduct = async (uid) => {
         await contract.shipByFarmer(uid)
-        .then(result => setMessage("Ship to distributor successfully !!!"))
-        .catch(err => setMessage("Can't ship product because You aren't farmer or no distributor avalable"));
+        .then(result => alert("Ship to distributor successfully !!!"))
+        .catch(err => alert("Can't ship product because You aren't farmer or no distributor avalable"));
     }
 
     return(

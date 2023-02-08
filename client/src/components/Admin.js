@@ -13,7 +13,7 @@ const Admin = (props) => {
         )
         .then(result => setMessage("Add Farmer successfully !!!"))
         .catch(err => {
-            setMessage("Can't add Farmer");
+            alert("Can't add Farmer");
         });
 	}
 
@@ -25,7 +25,7 @@ const Admin = (props) => {
         )
         .then(result => setMessage("Add Distributor successfully !!!"))
         .catch(err => {
-            setMessage("Can't add Distributor");
+            alert("Can't add Distributor");
         });
 	}
 
@@ -37,7 +37,7 @@ const Admin = (props) => {
         )
         .then(result => setMessage("Add Retailer successfully !!!"))
         .catch(err => {
-            setMessage("Can't add Retailer");
+            alert("Can't add Retailer");
         });
 	}
 
@@ -66,7 +66,6 @@ const Admin = (props) => {
                     <br></br>
                     <button type={"submit"} className="btn-form"> Add Farmer </button>
                 </form>
-                <h5>{message}</h5>
             </div>
             <div className='container-form-item'>
                 <h3 className='header-form'>Add Distributor</h3>
@@ -79,7 +78,6 @@ const Admin = (props) => {
                     <br></br>
                     <button type={"submit"} className="btn-form"> Add Distributor </button>
                 </form>
-                <h5>{message}</h5>
             </div>
             <div className='container-form-item'>
                 <h3 className='header-form'>Add Retailer</h3>
@@ -92,7 +90,6 @@ const Admin = (props) => {
                     <br></br>
                     <button type={"submit"} className="btn-form"> Add Retailer </button>
                 </form>
-                <h5>{message}</h5>
             </div>
             <div className='container-form-item'>
                 <h3 className='header-form'>Add Customer</h3>
@@ -105,7 +102,6 @@ const Admin = (props) => {
                     <br></br>
                     <button type={"submit"} className="btn-form"> Add Customer </button>
                 </form>
-                <h5>{message}</h5>
             </div>
         </div>
     )
