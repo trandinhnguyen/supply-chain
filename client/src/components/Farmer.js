@@ -15,8 +15,8 @@ const Farmer = (props) => {
             event.target.productPrice.value,
             event.target.productCode.value
         )
-        .then(result => setMessage("Add product successfully !!!"))
-        .catch(err => setMessage("You don't have Farmer Role"));
+        .then(result => alert("Add product successfully !!!"))
+        .catch(err => alert("You don't have Farmer Role"));
 	}
 
     const getMyProductList = async () =>{
@@ -31,20 +31,20 @@ const Farmer = (props) => {
             }
             )
         }))
-        .catch(err => setMessage("This account doesn't have Farmer Role"))
+        .catch(err => alert("This account don't have Farmer Role"))
     }
 
     const renderProductListData = () => {
         return productList.map(product => {
             return (
-                <tr key={product[0]}>
-                  <td>{product[0]._hex}</td>
-                  <td>{product[1]._hex}</td>
+                <tr key={product[0]} className='table-body'>
+                  <td>{parseInt(product[0]._hex)}</td>
+                  <td>{parseInt(product[1]._hex)}</td>
                   <td>{product[2]}</td>
                   <td>{product[3]}</td>
                   <td>{product[4]}</td>
-                  <td>{product[5]._hex}</td>
-                  <td>{product[6]._hex}</td>
+                  <td>{parseInt(product[5]._hex)}</td>
+                  <td>{parseInt(product[6]._hex)}</td>
                   <td>{product[7]}</td>
                   <td>{product[8]}</td>
                   <td>{product[9]}</td>
@@ -72,30 +72,27 @@ const Farmer = (props) => {
 
     const shipProduct = async (uid) => {
         await contract.shipByFarmer(uid)
-        .then(result => setMessage("Ship to distributor successfully !!!"))
-        .catch(err => setMessage("Can't ship product because You aren't farmer or no distributor avalable"));
+        .then(result => alert("Ship to distributor successfully !!!"))
+        .catch(err => alert("Can't ship product because You aren't farmer or no distributor avalable"));
     }
 
     return(
-        <div>
+        <div className='Farmer-container'>
             <h3>Farmer Page</h3>
             <form onSubmit={addProduct}>
-                <label htmlFor="productName">Product name</label>
-                <input id="productName" type="text"/>
+                <input id="productName" type="text" placeholder='Product name'/>
                 <br></br>
-                <label htmlFor="productPrice">Product price</label>
-                <input id="productPrice" type="number"/>
+                <input id="productPrice" type="number" placeholder='Product price'/>
                 <br></br>
-                <label htmlFor="productCode">Product code</label>
-                <input id="productCode" type="text"/>
+                <input id="productCode" type="text" placeholder='Product code'/>
                 <br></br>
-				<button type={"submit"}> Add Product </button>
+				<button type={"submit"} className="btn-form"> Add Product </button>
 			</form>
-            <button onClick={getMyProductList}> Get My Products </button>
+            <button onClick={getMyProductList} className="btn-form"> Get My Products </button>
             <h5>{message}</h5>
-            <table>
+            <table className='table-farmer'>
                 <tbody>
-                    <tr>{renderTableHeader()}</tr>
+                    <tr className='table-header'>{renderTableHeader()}</tr>
                     {renderProductListData()}
                 </tbody>
             </table>

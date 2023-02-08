@@ -13,7 +13,7 @@ const Admin = (props) => {
         )
         .then(result => setMessage("Add Farmer successfully !!!"))
         .catch(err => {
-            setMessage("Can't add Farmer");
+            alert("Can't add Farmer");
         });
 	}
 
@@ -25,7 +25,7 @@ const Admin = (props) => {
         )
         .then(result => setMessage("Add Distributor successfully !!!"))
         .catch(err => {
-            setMessage("Can't add Distributor");
+            alert("Can't add Distributor");
         });
 	}
 
@@ -37,7 +37,7 @@ const Admin = (props) => {
         )
         .then(result => setMessage("Add Retailer successfully !!!"))
         .catch(err => {
-            setMessage("Can't add Retailer");
+            alert("Can't add Retailer");
         });
 	}
 
@@ -49,76 +49,59 @@ const Admin = (props) => {
         )
         .then(result => setMessage("Add Customer successfully !!!"))
         .catch(err => {
-            setMessage("Can't add Customer");
+            alert("Can't add Customer");
         });
 	}
 
     return(
-        <div>
-            <h2>Admin Page</h2>
-            <div>
-                <h3>Add Farmer</h3>
+        <div className='container-form'>
+            <div className='container-form-item'>
+                <h3 className='header-form'>Add Farmer</h3>
                 <form onSubmit={addFarmer}>
-                    <label htmlFor="farmer">Account: </label>
-                    <input id="farmer" type="text"/>
+                    <input id="farmer" type="text" placeholder='Account'/>
                     <br></br>
-                    <label htmlFor="farmerName">Name: </label>
-                    <input id="farmerName" type="text"/>
+                    <input id="farmerName" type="text" placeholder='Name'/>
                     <br></br>
-                    <label htmlFor="farmerRealAddress">Address: </label>
-                    <input id="farmerRealAddress" type="text"/>
+                    <input id="farmerRealAddress" type="text" placeholder='Address'/>
                     <br></br>
-                    <button type={"submit"}> Add Farmer </button>
+                    <button type={"submit"} className="btn-form"> Add Farmer </button>
                 </form>
-                <h5>{message}</h5>
             </div>
-            <div>
-                <h3>Add Distributor</h3>
+            <div className='container-form-item'>
+                <h3 className='header-form'>Add Distributor</h3>
                 <form onSubmit={addDistributor}>
-                    <label htmlFor="distributor">Account: </label>
-                    <input id="distributor" type="text"/>
+                    <input id="distributor" type="text" placeholder='Account'/>
                     <br></br>
-                    <label htmlFor="distributorName">Name: </label>
-                    <input id="distributorName" type="text"/>
+                    <input id="distributorName" type="text" placeholder='Name'/>
                     <br></br>
-                    <label htmlFor="distributorRealAddress">Address: </label>
-                    <input id="distributorRealAddress" type="text"/>
+                    <input id="distributorRealAddress" type="text" placeholder='Address'/>
                     <br></br>
-                    <button type={"submit"}> Add Distributor </button>
+                    <button type={"submit"} className="btn-form"> Add Distributor </button>
                 </form>
-                <h5>{message}</h5>
             </div>
-            <div>
-                <h3>Add Retailer</h3>
+            <div className='container-form-item'>
+                <h3 className='header-form'>Add Retailer</h3>
                 <form onSubmit={addRetailer}>
-                    <label htmlFor="retailer">Account: </label>
-                    <input id="retailer" type="text"/>
+                    <input id="retailer" type="text" placeholder='Account'/>
                     <br></br>
-                    <label htmlFor="retailerName">Name: </label>
-                    <input id="retailerName" type="text"/>
+                    <input id="retailerName" type="text" placeholder='Name'/>
                     <br></br>
-                    <label htmlFor="retailerRealAddress">Address: </label>
-                    <input id="retailerRealAddress" type="text"/>
+                    <input id="retailerRealAddress" type="text" placeholder='Address'/>
                     <br></br>
-                    <button type={"submit"}> Add Retailer </button>
+                    <button type={"submit"} className="btn-form"> Add Retailer </button>
                 </form>
-                <h5>{message}</h5>
             </div>
-            <div>
-                <h3>Add Customer</h3>
+            <div className='container-form-item'>
+                <h3 className='header-form'>Add Customer</h3>
                 <form onSubmit={addCustomer}>
-                    <label htmlFor="customer">Account: </label>
-                    <input id="customer" type="text"/>
+                    <input id="customer" type="text" placeholder='Account'/>
                     <br></br>
-                    <label htmlFor="customerName">Name: </label>
-                    <input id="customerName" type="text"/>
+                    <input id="customerName" type="text" placeholder='Name'/>
                     <br></br>
-                    <label htmlFor="customerRealAddress">Address: </label>
-                    <input id="customerRealAddress" type="text"/>
+                    <input id="customerRealAddress" type="text" placeholder='Address'/>
                     <br></br>
-                    <button type={"submit"}> Add Customer </button>
+                    <button type={"submit"} className="btn-form"> Add Customer </button>
                 </form>
-                <h5>{message}</h5>
             </div>
         </div>
     )

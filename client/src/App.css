@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +35,107 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.nav {
+  vertical-align: middle;
+  height: 50px;
+  display: flex;
+  justify-content: left;
+  border: #282c34 1px solid;
+  background-color: #2d0ced;
+  margin-bottom: 10px;
+  flex-direction: row;
+}
+
+.nav-item {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  margin-left: 10px;
+  text-align: center;
+  line-height: 50px;
+}
+
+
+.container {
+  margin-left: 10px;
+}
+
+.btn{
+  height: 40px;
+  border-radius: 10px;
+}
+
+.btn:hover{
+  background-color: rgb(185, 200, 226);
+}
+
+.container-form{
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.container-form-item{
+  width: 50%;
+}
+
+.header-from{
+  text-align: center;
+}
+
+.table-farmer {
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+.table-farmer th,td,table{
+  border: 1px solid;
+}
+
+.table-farmer th,td{
+  max-width: 110px;
+  line-break: anywhere;
+}
+
+.btn-form{
+  margin-top: 5px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+.btn-form:hover{
+  background-color: rgb(206, 205, 237);
+}
+
+.container-form-item input{
+  width: 70%;
+  height: 30px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.Farmer-container{
+  margin-left: 10px;
+}
+
+.Farmer-container input{
+  width: 30%;
+  height: 30px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.content{
+  display: inline-block;
+  border: black 2px solid;
+  height: 100%;
+  margin-left: 10px;
+  border-radius: 10px;
+  height: 30px;
+  line-height: 30px;
+  width: 40%;
+  text-align: center;
 }
