@@ -267,6 +267,16 @@
           "internalType": "address",
           "name": "account",
           "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "realAddress",
+          "type": "string"
         }
       ],
       "name": "addCustomer",
@@ -669,9 +679,9 @@
           "type": "address"
         },
         {
-          "internalType": "string",
-          "name": "transaction",
-          "type": "string"
+          "internalType": "uint256",
+          "name": "stateChangeTimestamp",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -723,9 +733,9 @@
           "type": "address"
         },
         {
-          "internalType": "string",
-          "name": "transaction",
-          "type": "string"
+          "internalType": "uint256",
+          "name": "stateChangeTimestamp",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",

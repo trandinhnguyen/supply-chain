@@ -1,4 +1,4 @@
-import abi from "./SupplyChain.json";
+import abi from "../artifacts/SupplyChain.json";
 
 export const contractABI = abi.abi;
 

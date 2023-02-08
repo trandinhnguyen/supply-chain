@@ -7,10 +7,20 @@ import { Route, NavLink, Routes } from "react-router-dom";
 import React, { Component } from "react";
 import { ethers } from "ethers";
 import { contractABI, contractAddress } from "./utils/constants";
+import ProductHistory from "./components/ProductHistory";
+import { Distributor } from "./components/Distributor";
 import { Retailer } from "./components/Retailer";
 
 class App extends Component {
+class App extends Component {
   state = {
+    errorMessage: null,
+    defaultAccount: null,
+    contract: null,
+    connButtonText: null,
+    currentOwner: null,
+    provider: null,
+    signer: null,
     errorMessage: null,
     defaultAccount: null,
     contract: null,
@@ -33,17 +43,35 @@ class App extends Component {
         });
     } else {
       this.setState({ errorMessage: "Need to install Metamask" });
+
+  componentDidMount = async () => {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then((result) => {
+          this.accountChangedHandler(result[0]);
+          this.setState({ connButtonText: "Wallet Connected" });
+        })
+        .catch((error) => {
+          this.setState({ errorMessage: error.message });
+        });
+    } else {
+      this.setState({ errorMessage: "Need to install Metamask" });
     }
+  };
   };
 
   accountChangedHandler = (newAccount) => {
     this.setState({ defaultAccount: newAccount });
+    this.setState({ defaultAccount: newAccount });
     this.updateEthers();
+  };
   };
 
   updateEthers = () => {
     let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
 
+    let tempSigner = tempProvider.getSigner();
     let tempSigner = tempProvider.getSigner();
 
     let tempContract = new ethers.Contract(
@@ -66,9 +94,16 @@ class App extends Component {
 
   render() {
     return (
+    let val = await this.state.contract.owner();
+    this.setState({ currentOwner: val });
+  };
+
+  render() {
+    return (
       <div className="App">
         <div>
           <nav>
+            <NavLink to="/">Home</NavLink>
             <NavLink to="/">Home</NavLink>
           </nav>
 
@@ -152,7 +187,9 @@ class App extends Component {
             <Route exact path="/" element={<Home />} />
           </Routes>
         </div>
+        </div>
       </div>
+    );
     );
   }
 }

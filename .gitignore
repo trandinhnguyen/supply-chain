@@ -20,5 +20,5 @@ typechain-types
 # Hardhat files
 cache
 artifacts
-
+SupplyChain.json
 .deps
