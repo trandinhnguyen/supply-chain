@@ -113,27 +113,31 @@ const Retailer = (props) => {
   };
 
   return (
-    <div>
-      <h1>Retailer</h1>
+    <div className="Farmer-container">
+      <h2>Retailer Page</h2>
 
       <div>
         <div>
-          <h3>Purchase Product</h3>
+          <h4>Purchase Product</h4>
           <form onSubmit={purchaseProduct}>
-            <label htmlFor="uid"> Uid: </label>
+            <label htmlFor="uid"> UID: </label>
             <input id="uid" type="number" required></input>
-            <button type="submit">Purchase</button>
+            <button type="submit" className="btn-form">
+              Purchase
+            </button>
           </form>
         </div>
 
         <div>
-          <h3>My Product</h3>
-          <button onClick={getAllProduct}>Show</button>
+          <h4>My Product</h4>
+          <button onClick={getAllProduct} className="btn-form">
+            Show
+          </button>
         </div>
 
-        <table>
+        <table className="table-farmer">
           <tbody>
-            <tr>{renderTableHeader()}</tr>
+            <tr className="table-header">{renderTableHeader()}</tr>
             {renderProductListData()}
           </tbody>
         </table>
